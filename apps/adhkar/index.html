@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>الأذكار اليومية</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+    <button id="themeButton" class="theme-button">
+        🌙
+    </button>
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+    <header class="header">
+
+        <h1>🤲 الأذكار اليومية</h1>
+
+        <p>
+            اذكر الله واطمئن قلبك
+        </p>
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- Categories -->
+    <!-- ========================= -->
+
+    <main>
+
+        <section
+            id="categories"
+            class="categories"
+        >
+
+            <button
+                class="category-card"
+                data-category="morning"
+            >
+                <span>🌅</span>
+                <strong>أذكار الصباح</strong>
+                <small>ابدأ يومك بذكر الله</small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="evening"
+            >
+                <span>🌇</span>
+                <strong>أذكار المساء</strong>
+                <small>اختم يومك بذكر الله</small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="before-sleep"
+            >
+                <span>😴</span>
+                <strong>أذكار النوم</strong>
+                <small>اذكر الله قبل نومك</small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="after-prayer"
+            >
+                <span>🕌</span>
+                <strong>بعد الصلاة</strong>
+                <small>أذكار بعد الصلوات</small>
+            </button>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- Adhkar Page -->
+        <!-- ========================= -->
+
+        <section
+            id="adhkarPage"
+            class="adhkar-page hidden"
+        >
+
+            <div class="top-bar">
+
+                <button
+                    id="backButton"
+                    class="back-button"
+                >
+                    ← رجوع
+                </button>
+
+                <h2 id="categoryTitle">
+                    الأذكار
+                </h2>
+
+            </div>
+
+
+            <!-- Progress -->
+
+            <div class="progress-container">
+
+                <div class="progress-info">
+
+                    <span>
+                        التقدم
+                    </span>
+
+                    <span id="progressText">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        id="progressBar"
+                        class="progress"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Adhkar -->
+
+            <div
+                id="adhkarContainer"
+                class="adhkar-container"
+            >
+
+                <div class="loading">
+
+                    <div class="spinner"></div>
+
+                    <p>
+                        جاري تحميل الأذكار...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

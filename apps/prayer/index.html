@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>مواقيت الصلاة</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =====================================================
+         Header
+    ====================================================== -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>🕌 مواقيت الصلاة</h1>
+
+            <p id="location">
+                📍 جاري تحديد الموقع...
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                id="themeButton"
+                class="icon-button"
+                title="تغيير الثيم"
+            >
+                🌙
+            </button>
+
+
+            <button
+                id="settingsButton"
+                class="icon-button"
+                title="الإعدادات"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         Date
+    ====================================================== -->
+
+    <section class="date-card">
+
+        <div>
+
+            <span class="date-label">
+                التاريخ الميلادي
+            </span>
+
+            <strong id="gregorianDate">
+                --
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span class="date-label">
+                التاريخ الهجري
+            </span>
+
+            <strong id="hijriDate">
+                --
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         Next Prayer
+    ====================================================== -->
+
+    <section
+        id="nextPrayerCard"
+        class="next-prayer-card"
+    >
+
+        <div>
+
+            <span class="small-label">
+                الصلاة القادمة
+            </span>
+
+            <h2 id="nextPrayerName">
+                --
+            </h2>
+
+            <span id="nextPrayerTime">
+                --
+            </span>
+
+        </div>
+
+
+        <div class="countdown-box">
+
+            <span>
+                متبقي
+            </span>
+
+            <strong id="countdown">
+                --:--:--
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         Prayer Times
+    ====================================================== -->
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>
+                أوقات الصلاة
+            </h2>
+
+            <button
+                id="refreshButton"
+                class="refresh-button"
+                title="تحديث"
+            >
+                🔄
+            </button>
+
+        </div>
+
+
+        <div
+            id="prayerContainer"
+            class="prayer-grid"
+        >
+
+            <div class="loading">
+
+                <div class="spinner"></div>
+
+                <p>
+                    جاري تحميل المواقيت...
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         Extra Times
+    ====================================================== -->
+
+    <section class="extra-times">
+
+        <div class="extra-card">
+
+            <span>
+                🌙 منتصف الليل
+            </span>
+
+            <strong id="midnight">
+                --
+            </strong>
+
+        </div>
+
+
+        <div class="extra-card">
+
+            <span>
+                🌃 الثلث الأول
+            </span>
+
+            <strong id="firstThird">
+                --
+            </strong>
+
+        </div>
+
+
+        <div class="extra-card">
+
+            <span>
+                🌌 الثلث الأخير
+            </span>
+
+            <strong id="lastThird">
+                --
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         Settings Modal
+    ====================================================== -->
+
+    <div
+        id="settingsModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>
+                    ⚙️ إعدادات الصلاة
+                </h2>
+
+                <button
+                    id="closeSettings"
+                    class="close-button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <label>
+                المدينة
+            </label>
+
+            <input
+                id="cityInput"
+                type="text"
+                placeholder="مثال: Cairo"
+            >
+
+
+            <label>
+                الدولة
+            </label>
+
+            <input
+                id="countryInput"
+                type="text"
+                placeholder="مثال: Egypt"
+            >
+
+
+            <button
+                id="locationButton"
+                class="primary-button"
+            >
+                📍 استخدام موقعي
+            </button>
+
+
+            <!-- Calculation Method -->
+
+            <label>
+                طريقة حساب الصلاة
+            </label>
+
+            <select id="methodSelect">
+
+                <option value="5">
+                    هيئة المساحة المصرية
+                </option>
+
+                <option value="3">
+                    رابطة العالم الإسلامي
+                </option>
+
+                <option value="4">
+                    أم القرى - مكة
+                </option>
+
+                <option value="2">
+                    ISNA
+                </option>
+
+                <option value="1">
+                    جامعة العلوم الإسلامية - كراتشي
+                </option>
+
+                <option value="8">
+                    منطقة الخليج
+                </option>
+
+            </select>
+
+
+            <!-- School -->
+
+            <label>
+                طريقة حساب العصر
+            </label>
+
+            <select id="schoolSelect">
+
+                <option value="0">
+                    الشافعي / القياسي
+                </option>
+
+                <option value="1">
+                    الحنفي
+                </option>
+
+            </select>
+
+
+            <button
+                id="saveSettings"
+                class="primary-button"
+            >
+                💾 حفظ الإعدادات
+            </button>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,746 @@
+/* ============================================================
+   Global
+============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #0b1020;
+    color: #ffffff;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+
+/* ============================================================
+   Main App
+============================================================ */
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+
+/* ============================================================
+   Header
+============================================================ */
+
+.header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #aab3c5;
+    font-size: 16px;
+}
+
+
+/* ============================================================
+   Categories
+============================================================ */
+
+.categories {
+    max-width: 1000px;
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ============================================================
+   Category Card
+============================================================ */
+
+.category-card {
+
+    border: none;
+
+    min-height: 160px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151d35,
+            #10172a
+        );
+
+    color: white;
+
+    cursor: pointer;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    transition:
+        transform 0.25s,
+        box-shadow 0.25s,
+        background 0.25s;
+}
+
+
+.category-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #1b2745,
+            #131d34
+        );
+
+    box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+.category-card:active {
+
+    transform:
+        translateY(-2px)
+        scale(0.98);
+}
+
+
+.category-icon {
+
+    font-size: 45px;
+
+}
+
+
+.category-title {
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+}
+
+
+/* ============================================================
+   Adhkar Page
+============================================================ */
+
+.adhkar-page {
+
+    max-width: 900px;
+
+    margin: auto;
+
+}
+
+
+/* ============================================================
+   Top Bar
+============================================================ */
+
+.top-bar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.back-button {
+
+    border: none;
+
+    background: #18223d;
+
+    color: white;
+
+    padding: 11px 18px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+
+}
+
+
+.back-button:hover {
+
+    background: #243252;
+
+    transform: translateX(3px);
+
+}
+
+
+/* ============================================================
+   Category Title
+============================================================ */
+
+#categoryTitle {
+
+    font-size: 30px;
+
+}
+
+
+/* ============================================================
+   Progress
+============================================================ */
+
+.progress-container {
+
+    background: #151d32;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.progress-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    color: #b8c1d5;
+
+    font-size: 14px;
+
+}
+
+
+.progress-track {
+
+    width: 100%;
+
+    height: 10px;
+
+    background: #252e45;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+
+#progressBar {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #3b82f6,
+            #60a5fa
+        );
+
+    transition:
+        width 0.4s ease;
+
+}
+
+
+/* ============================================================
+   Adhkar Container
+============================================================ */
+
+#adhkarContainer {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+/* ============================================================
+   Dhikr Card
+============================================================ */
+
+.dhikr-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #151d35,
+            #10172a
+        );
+
+    border: 1px solid
+        rgba(255,255,255,0.05);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    transition:
+        0.3s;
+
+}
+
+
+.dhikr-card:hover {
+
+    border-color:
+        rgba(96,165,250,0.25);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.dhikr-card.completed {
+
+    opacity: 0.65;
+
+    border-color:
+        rgba(34,197,94,0.35);
+
+}
+
+
+/* ============================================================
+   Dhikr Text
+============================================================ */
+
+.dhikr-text {
+
+    font-size: 23px;
+
+    line-height: 2;
+
+    text-align: right;
+
+    color: #f7f9ff;
+
+    margin-bottom: 22px;
+
+}
+
+
+/* ============================================================
+   Dhikr Info
+============================================================ */
+
+.dhikr-info {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+}
+
+
+.counter {
+
+    background: #202b47;
+
+    color: #bcd0f5;
+
+    padding: 8px 14px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+}
+
+
+/* ============================================================
+   Count Button
+============================================================ */
+
+.count-button {
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    color: white;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s,
+        opacity 0.2s;
+
+}
+
+
+.count-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(37,99,235,0.3);
+
+}
+
+
+.count-button:active {
+
+    transform:
+        scale(0.96);
+
+}
+
+
+.count-button:disabled {
+
+    background:
+        #166534;
+
+    cursor: default;
+
+    opacity: 0.9;
+
+}
+
+
+/* ============================================================
+   Loading
+============================================================ */
+
+.loading {
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    color: #aeb8cc;
+
+}
+
+
+.spinner {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    border: 4px solid
+        #27334d;
+
+    border-top-color:
+        #3b82f6;
+
+    animation:
+        spin 0.8s linear infinite;
+
+    margin:
+        0 auto 18px;
+
+}
+
+
+@keyframes spin {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* ============================================================
+   Hidden
+============================================================ */
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* ============================================================
+   Mobile
+============================================================ */
+
+@media (max-width: 600px) {
+
+    .app {
+
+        padding: 18px;
+
+    }
+
+
+    .header h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    #categoryTitle {
+
+        font-size: 23px;
+
+    }
+
+
+    .top-bar {
+
+        align-items: flex-start;
+
+    }
+
+
+    .dhikr-card {
+
+        padding: 20px;
+
+    }
+
+
+    .dhikr-text {
+
+        font-size: 20px;
+
+        line-height: 1.9;
+
+    }
+
+
+    .dhikr-info {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .counter {
+
+        text-align: center;
+
+    }
+
+
+    .count-button {
+
+        width: 100%;
+
+    }
+
+}
+
+/* ============================================================
+   Theme Button
+============================================================ */
+
+.theme-button {
+
+    position: fixed;
+
+    top: 20px;
+
+    left: 20px;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #18223d;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    z-index: 1000;
+
+    transition: 0.25s;
+
+}
+
+
+.theme-button:hover {
+
+    transform: rotate(20deg) scale(1.08);
+
+}
+
+
+/* ============================================================
+   Light Theme
+============================================================ */
+
+body.light-theme {
+
+    background: #f4f7fb;
+
+    color: #172033;
+
+}
+
+
+body.light-theme .theme-button {
+
+    background: #ffffff;
+
+    color: #172033;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.12);
+
+}
+
+
+body.light-theme .category-card {
+
+    background: #ffffff;
+
+    color: #172033;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.08);
+
+}
+
+
+body.light-theme .category-card:hover {
+
+    background: #f8fbff;
+
+}
+
+
+body.light-theme .adhkar-page {
+
+    color: #172033;
+
+}
+
+
+body.light-theme .dhikr-card {
+
+    background: #ffffff;
+
+    color: #172033;
+
+    border-color: #e5e9f2;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.06);
+
+}
+
+
+body.light-theme .dhikr-text {
+
+    color: #172033;
+
+}
+
+
+body.light-theme .counter {
+
+    background: #eef3fa;
+
+    color: #334155;
+
+}
+
+
+body.light-theme .back-button {
+
+    background: #ffffff;
+
+    color: #172033;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.08);
+
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>القرآن الكريم</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="header-content">
+
+            <button id="backButton" class="icon-button hidden" aria-label="رجوع">
+                ←
+            </button>
+
+            <div class="title-area">
+                <h1>القرآن الكريم</h1>
+                <p id="pageSubtitle">كتاب الله تعالى</p>
+            </div>
+
+            <button id="themeButton" class="icon-button" aria-label="تغيير الوضع">
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main -->
+    <main>
+
+        <!-- Surahs Page -->
+        <section id="surahsPage" class="page">
+
+            <div class="welcome">
+                <div class="quran-icon">﷽</div>
+
+                <h2>القرآن الكريم</h2>
+
+                <p>
+                    اقرأ كتاب الله وتابع وردك بسهولة
+                </p>
+            </div>
+
+
+            <!-- Continue Reading -->
+            <div id="continueCard" class="continue-card hidden">
+
+                <div>
+                    <span class="continue-label">متابعة القراءة</span>
+
+                    <h3 id="continueSurah">
+                        سورة الفاتحة
+                    </h3>
+
+                    <p id="continueAyah">
+                        الآية 1
+                    </p>
+                </div>
+
+                <button id="continueButton">
+                    متابعة
+                </button>
+
+            </div>
+
+
+            <!-- Search -->
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="search"
+                    id="surahSearch"
+                    placeholder="ابحث عن سورة..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- Surahs -->
+            <div id="surahsContainer" class="surahs-container">
+
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحميل السور...</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Surah Reader Page -->
+        <section id="readerPage" class="page hidden">
+
+            <div class="surah-header">
+
+                <div class="surah-number" id="readerNumber">
+                    1
+                </div>
+
+                <h2 id="readerName">
+                    سورة الفاتحة
+                </h2>
+
+                <p id="readerInfo">
+                    مكية • 7 آيات
+                </p>
+
+            </div>
+
+
+            <!-- Reader Controls -->
+            <div class="reader-controls">
+
+                <button id="fontDecrease">
+                    A−
+                </button>
+
+                <span id="fontSizeValue">
+                    30
+                </span>
+
+                <button id="fontIncrease">
+                    A+
+                </button>
+
+            </div>
+
+
+            <!-- Bismillah -->
+            <div id="bismillah" class="bismillah">
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </div>
+
+
+            <!-- Ayahs -->
+            <div id="ayahsContainer" class="ayahs-container">
+
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري تحميل السورة...</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Search Results -->
+        <section id="searchPage" class="page hidden">
+
+            <div class="search-header">
+
+                <h2>نتائج البحث</h2>
+
+                <p id="searchQuery"></p>
+
+            </div>
+
+            <div id="searchResults"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Search Button -->
+    <button id="globalSearchButton" class="floating-button">
+        🔍
+    </button>
+
+
+    <!-- Search Overlay -->
+    <div id="searchOverlay" class="overlay hidden">
+
+        <div class="search-modal">
+
+            <div class="modal-header">
+
+                <h2>البحث في القرآن عن المتشابهات</h2>
+
+                <button id="closeSearch">
+                    ×
+                </button>
+
+            </div>
+
+            <div class="full-search">
+
+                <input
+                    type="search"
+                    id="ayahSearch"
+                    placeholder="اكتب كلمة للبحث..."
+                    autocomplete="off"
+                >
+
+                <button id="searchButton">
+                    بحث
+                </button>
+
+            </div>
+
+            <p class="search-note">
+                البحث يتم من خلال بيانات القرآن المتاحة عبر الإنترنت.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,2104 @@
+
+/* =========================================================
+   SO HALAL MODE OS
+   Main Stylesheet
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #080b12;
+    color: #ffffff;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#os {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(30, 100, 255, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(120, 40, 255, 0.15),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #05070c,
+            #0b1020
+        );
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+#desktop {
+    position: absolute;
+
+    inset: 0;
+
+    padding-bottom: 62px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.05),
+            rgba(0, 0, 0, 0.25)
+        );
+}
+
+
+/* =========================================================
+   DESKTOP APPS
+   ========================================================= */
+
+#desktop-apps {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    align-content: flex-start;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   DESKTOP APP ICON
+   ========================================================= */
+
+.desktop-app {
+    width: 82px;
+    min-height: 92px;
+
+    padding: 8px;
+
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.desktop-app:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.desktop-app:active {
+    transform: scale(0.95);
+}
+
+.desktop-app-icon {
+    width: 52px;
+    height: 52px;
+
+    object-fit: contain;
+
+    border-radius: 13px;
+
+    filter:
+        drop-shadow(
+            0 5px 12px
+            rgba(0, 0, 0, 0.35)
+        );
+}
+
+.desktop-app-name {
+    width: 100%;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    line-height: 17px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 1px 3px
+        rgba(0, 0, 0, 0.8);
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   WINDOWS CONTAINER
+   ========================================================= */
+
+#windows-container {
+    position: absolute;
+
+    inset: 0;
+
+    padding-bottom: 62px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   APP WINDOW
+   ========================================================= */
+
+.os-window {
+    position: absolute;
+
+    min-width: 300px;
+    min-height: 200px;
+
+    width: 700px;
+    height: 500px;
+
+    overflow: hidden;
+
+    pointer-events: auto;
+
+    background:
+        rgba(15, 18, 28, 0.88);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.55);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    display: flex;
+    flex-direction: column;
+
+    animation:
+        window-open
+        0.18s
+        ease-out;
+}
+
+@keyframes window-open {
+
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================================
+   WINDOW MAXIMIZED
+   ========================================================= */
+
+.os-window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    height: calc(100% - 62px) !important;
+
+    border-radius: 0;
+}
+
+
+/* =========================================================
+   WINDOW MINIMIZED
+   ========================================================= */
+
+.os-window.minimized {
+    display: none;
+}
+
+
+/* =========================================================
+   WINDOW HEADER
+   ========================================================= */
+
+.window-header {
+    height: 45px;
+
+    flex-shrink: 0;
+
+    padding: 0 10px 0 16px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   WINDOW TITLE
+   ========================================================= */
+
+.window-title {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 0;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #ffffff;
+}
+
+.window-title-icon {
+    width: 22px;
+    height: 22px;
+
+    object-fit: contain;
+
+    border-radius: 5px;
+}
+
+.window-title-text {
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   WINDOW CONTROLS
+   ========================================================= */
+
+.window-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+}
+
+.window-control {
+    width: 34px;
+    height: 30px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+        background 0.15s ease;
+}
+
+.window-control:hover {
+    background:
+        rgba(255, 255, 255, 0.10);
+}
+
+.window-control.close:hover {
+    background: #d9363e;
+}
+
+
+/* =========================================================
+   WINDOW CONTENT
+   ========================================================= */
+
+.window-content {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow: auto;
+
+    background:
+        rgba(5, 7, 12, 0.25);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   TASKBAR
+   ========================================================= */
+
+#taskbar {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 62px;
+
+    z-index: 5000;
+
+    display: flex;
+    align-items: center;
+
+    padding: 7px 10px;
+
+    background:
+        rgba(10, 12, 20, 0.82);
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 -10px 30px
+        rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
+   TASKBAR BUTTON
+   ========================================================= */
+
+.taskbar-button {
+    width: 48px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.taskbar-button:hover {
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+.taskbar-button:active {
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   ME LOGO
+   ========================================================= */
+
+.me-logo {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4d8dff,
+            #7a4dff
+        );
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px
+        rgba(70, 100, 255, 0.35);
+}
+
+
+/* =========================================================
+   RUNNING APPS
+   ========================================================= */
+
+.running-apps {
+    flex: 1;
+
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-left: 7px;
+
+    overflow-x: auto;
+}
+
+.running-apps::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   RUNNING APP
+   ========================================================= */
+
+.running-app {
+    height: 46px;
+
+    min-width: 48px;
+    max-width: 190px;
+
+    padding: 0 11px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+.running-app:hover {
+    background:
+        rgba(255, 255, 255, 0.10);
+}
+
+.running-app.active {
+    background:
+        rgba(255, 255, 255, 0.13);
+}
+
+.running-app img {
+    width: 25px;
+    height: 25px;
+
+    object-fit: contain;
+
+    border-radius: 6px;
+}
+
+.running-app span {
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TASKBAR RIGHT
+   ========================================================= */
+
+.taskbar-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+}
+
+
+/* =========================================================
+   TRAY BUTTON
+   ========================================================= */
+
+.tray-button {
+    width: 38px;
+    height: 42px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition:
+        background 0.15s ease;
+}
+
+.tray-button:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   CLOCK
+   ========================================================= */
+
+.clock {
+    min-width: 72px;
+    height: 48px;
+
+    padding: 3px 8px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    line-height: 16px;
+
+    transition:
+        background 0.15s ease;
+}
+
+.clock:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+.clock #time {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.clock #date {
+    font-size: 11px;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   START MENU
+   ========================================================= */
+
+#start-menu {
+    position: absolute;
+
+    left: 10px;
+    bottom: 70px;
+
+    width: 440px;
+    max-height: calc(100vh - 90px);
+
+    z-index: 4500;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.11);
+
+    border-radius: 18px;
+
+    background:
+        rgba(14, 17, 27, 0.91);
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0, 0, 0, 0.55);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    animation:
+        menu-open
+        0.16s
+        ease-out;
+}
+
+@keyframes menu-open {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.start-search input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 15px;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.08);
+
+    outline: none;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    color: white;
+
+    font-size: 14px;
+
+    transition:
+        border 0.15s ease,
+        background 0.15s ease;
+}
+
+.start-search input:focus {
+    border-color:
+        rgba(80, 130, 255, 0.65);
+
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+.start-search input::placeholder {
+    color:
+        rgba(255, 255, 255, 0.45);
+}
+
+
+/* =========================================================
+   START SECTIONS
+   ========================================================= */
+
+.start-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-height: 0;
+}
+
+.start-section h2 {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+}
+
+
+/* =========================================================
+   APPS GRID
+   ========================================================= */
+
+.apps-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 7px;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   START APP
+   ========================================================= */
+
+.start-app {
+    min-height: 75px;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    transition:
+        background 0.15s ease;
+}
+
+.start-app:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+.start-app img {
+    width: 34px;
+    height: 34px;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+}
+
+.start-app span {
+    width: 100%;
+
+    font-size: 11px;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ALL APPS
+   ========================================================= */
+
+.apps-list {
+    max-height: 190px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.app-list-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    padding: 6px 9px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: left;
+
+    transition:
+        background 0.15s ease;
+}
+
+.app-list-item:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+.app-list-item img {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    border-radius: 7px;
+}
+
+
+/* =========================================================
+   START BOTTOM
+   ========================================================= */
+
+.start-bottom {
+    margin-top: auto;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+}
+
+.system-user {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 13px;
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4d8dff,
+            #7a4dff
+        );
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.system-button {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition:
+        background 0.15s ease;
+}
+
+.system-button:hover {
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   NOTIFICATION CENTER
+   ========================================================= */
+
+#notification-center {
+    position: absolute;
+
+    right: 10px;
+    bottom: 70px;
+
+    width: 350px;
+    max-height: 500px;
+
+    z-index: 4400;
+
+    padding: 16px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius: 16px;
+
+    background:
+        rgba(14, 17, 27, 0.93);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.5);
+
+    animation:
+        menu-open
+        0.16s
+        ease-out;
+}
+
+
+/* =========================================================
+   NOTIFICATION HEADER
+   ========================================================= */
+
+.notification-header {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.notification-header h2 {
+    flex: 1;
+
+    font-size: 16px;
+}
+
+.notification-header button {
+    border: none;
+
+    background: transparent;
+
+    color:
+        #70a0ff;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notifications {
+    max-height: 410px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.notification {
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.055);
+}
+
+.notification-title {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 4px;
+}
+
+.notification-message {
+    font-size: 12px;
+
+    line-height: 17px;
+
+    opacity: 0.72;
+}
+
+
+/* =========================================================
+   QUICK SETTINGS
+   ========================================================= */
+
+#quick-settings {
+    position: absolute;
+
+    right: 10px;
+    bottom: 70px;
+
+    width: 300px;
+
+    z-index: 4300;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius: 16px;
+
+    background:
+        rgba(14, 17, 27, 0.93);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.5);
+}
+
+.quick-settings-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+}
+
+.quick-setting {
+    min-height: 70px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    font-size: 12px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.quick-setting:hover {
+    background:
+        rgba(255, 255, 255, 0.11);
+}
+
+.quick-setting:active {
+    transform: scale(0.96);
+}
+
+.quick-setting span:first-child {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   CONTEXT MENU
+   ========================================================= */
+
+#context-menu {
+    position: fixed;
+
+    z-index: 10000;
+
+    min-width: 180px;
+
+    padding: 6px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.11);
+
+    border-radius: 10px;
+
+    background:
+        rgba(17, 20, 30, 0.96);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.5);
+}
+
+#context-menu button {
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 11px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    transition:
+        background 0.12s ease;
+}
+
+#context-menu button:hover {
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+#context-menu hr {
+    border: none;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    margin: 5px 0;
+}
+
+
+/* =========================================================
+   LOADING SCREEN
+   ========================================================= */
+
+#loading-screen {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #101a35,
+            #05070c 70%
+        );
+
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
+    text-align: center;
+}
+
+.loading-logo {
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 23px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4d8dff,
+            #7a4dff
+        );
+
+    font-size: 25px;
+    font-weight: 900;
+
+    box-shadow:
+        0 15px 45px
+        rgba(70, 100, 255, 0.35);
+
+    animation:
+        logo-pulse
+        1.6s
+        ease-in-out
+        infinite;
+}
+
+@keyframes logo-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.loading-content h1 {
+    font-size: 22px;
+
+    font-weight: 600;
+}
+
+.loading-content p {
+    font-size: 13px;
+
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   LOADING SPINNER
+   ========================================================= */
+
+.loading-spinner {
+    width: 27px;
+    height: 27px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-top-color:
+        #6c9cff;
+
+    animation:
+        spin
+        0.8s
+        linear
+        infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+#modal-container {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 15000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(5px);
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+#toast-container {
+    position: absolute;
+
+    right: 20px;
+    bottom: 80px;
+
+    z-index: 12000;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 8px;
+
+    pointer-events: none;
+}
+
+.toast {
+    min-width: 230px;
+    max-width: 360px;
+
+    padding: 12px 15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius: 10px;
+
+    background:
+        rgba(20, 23, 34, 0.94);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.35);
+
+    font-size: 13px;
+
+    animation:
+        toast-in
+        0.2s
+        ease-out;
+}
+
+@keyframes toast-in {
+
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================================
+   HIDDEN
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #desktop-apps {
+        padding: 15px;
+
+        gap: 10px;
+    }
+
+    .desktop-app {
+        width: 70px;
+        min-height: 82px;
+    }
+
+    .desktop-app-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .desktop-app-name {
+        font-size: 11px;
+    }
+
+
+    #start-menu {
+        left: 6px;
+        right: 6px;
+        bottom: 68px;
+
+        width: auto;
+
+        max-height:
+            calc(100vh - 80px);
+
+        border-radius: 15px;
+    }
+
+
+    .apps-grid {
+        grid-template-columns:
+            repeat(4, 1fr);
+    }
+
+
+    .os-window {
+        left: 5px !important;
+        top: 5px !important;
+
+        width:
+            calc(100% - 10px) !important;
+
+        height:
+            calc(100% - 72px) !important;
+
+        border-radius: 12px;
+    }
+
+
+    .running-app span {
+        display: none;
+    }
+
+
+    .running-app {
+        min-width: 45px;
+
+        padding: 0 8px;
+
+        justify-content: center;
+    }
+
+
+    .tray-button {
+        display: none;
+    }
+
+
+    .clock {
+        min-width: 65px;
+    }
+
+
+    #notification-center,
+    #quick-settings {
+        left: 6px;
+        right: 6px;
+
+        bottom: 68px;
+
+        width: auto;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+.app-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #111;
+}
+
+.window-content {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 45px);
+    overflow: hidden;
+}
+
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+
+body.light-mode {
+
+    background: #eef2f7;
+
+    color: #111827;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - OS
+   ========================================================= */
+
+body.light-mode #os {
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(30, 100, 255, 0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(120, 40, 255, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #eef2f7,
+            #dfe6f1
+        );
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - DESKTOP
+   ========================================================= */
+
+body.light-mode #desktop {
+
+    background:
+        linear-gradient(
+            rgba(255, 255, 255, 0.10),
+            rgba(255, 255, 255, 0.20)
+        );
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - DESKTOP APP
+   ========================================================= */
+
+body.light-mode .desktop-app-name {
+
+    color: #111827;
+
+    text-shadow:
+        0 1px 3px
+        rgba(255, 255, 255, 0.8);
+
+}
+
+body.light-mode .desktop-app:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - WINDOWS
+   ========================================================= */
+
+body.light-mode .os-window {
+
+    background:
+        rgba(255, 255, 255, 0.88);
+
+    border-color:
+        rgba(0, 0, 0, 0.12);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.20);
+
+}
+
+body.light-mode .window-header {
+
+    background:
+        rgba(0, 0, 0, 0.035);
+
+    border-bottom-color:
+        rgba(0, 0, 0, 0.08);
+
+}
+
+body.light-mode .window-title {
+
+    color: #111827;
+
+}
+
+body.light-mode .window-control {
+
+    color: #111827;
+
+}
+
+body.light-mode .window-control:hover {
+
+    background:
+        rgba(0, 0, 0, 0.08);
+
+}
+
+body.light-mode .window-content {
+
+    background:
+        rgba(255, 255, 255, 0.35);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - TASKBAR
+   ========================================================= */
+
+body.light-mode #taskbar {
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    border-top-color:
+        rgba(0, 0, 0, 0.10);
+
+    box-shadow:
+        0 -10px 30px
+        rgba(0, 0, 0, 0.08);
+
+}
+
+body.light-mode .taskbar-button {
+
+    color: #111827;
+
+}
+
+body.light-mode .taskbar-button:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+body.light-mode .running-app {
+
+    background:
+        rgba(0, 0, 0, 0.045);
+
+    color: #111827;
+
+}
+
+body.light-mode .running-app:hover {
+
+    background:
+        rgba(0, 0, 0, 0.09);
+
+}
+
+body.light-mode .running-app.active {
+
+    background:
+        rgba(0, 0, 0, 0.12);
+
+}
+
+body.light-mode .tray-button {
+
+    color: #111827;
+
+}
+
+body.light-mode .tray-button:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+body.light-mode .clock {
+
+    color: #111827;
+
+}
+
+body.light-mode .clock:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - START MENU
+   ========================================================= */
+
+body.light-mode #start-menu {
+
+    background:
+        rgba(255, 255, 255, 0.91);
+
+    border-color:
+        rgba(0, 0, 0, 0.12);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0, 0, 0, 0.20);
+
+}
+
+body.light-mode .start-section h2 {
+
+    color:
+        rgba(0, 0, 0, 0.65);
+
+}
+
+body.light-mode .start-search input {
+
+    background:
+        rgba(0, 0, 0, 0.05);
+
+    border-color:
+        rgba(0, 0, 0, 0.10);
+
+    color: #111827;
+
+}
+
+body.light-mode .start-search input::placeholder {
+
+    color:
+        rgba(0, 0, 0, 0.45);
+
+}
+
+body.light-mode .start-search input:focus {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+body.light-mode .start-app {
+
+    color: #111827;
+
+}
+
+body.light-mode .start-app:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+body.light-mode .app-list-item {
+
+    color: #111827;
+
+}
+
+body.light-mode .app-list-item:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+body.light-mode .start-bottom {
+
+    border-top-color:
+        rgba(0, 0, 0, 0.10);
+
+}
+
+body.light-mode .system-button {
+
+    color: #111827;
+
+}
+
+body.light-mode .system-button:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - QUICK SETTINGS
+   ========================================================= */
+
+body.light-mode #quick-settings {
+
+    background:
+        rgba(255, 255, 255, 0.93);
+
+    border-color:
+        rgba(0, 0, 0, 0.12);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.20);
+
+}
+
+body.light-mode .quick-setting {
+
+    background:
+        rgba(0, 0, 0, 0.05);
+
+    color: #111827;
+
+}
+
+body.light-mode .quick-setting:hover {
+
+    background:
+        rgba(0, 0, 0, 0.10);
+
+}
+
+body.light-mode .quick-setting.active {
+
+    background:
+        rgba(70, 120, 255, 0.18);
+
+}
+
+
+/* =========================================================
+   DARK MODE - QUICK SETTINGS ACTIVE
+   ========================================================= */
+
+.quick-setting.active {
+
+    background:
+        rgba(80, 130, 255, 0.20);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - NOTIFICATIONS
+   ========================================================= */
+
+body.light-mode #notification-center {
+
+    background:
+        rgba(255, 255, 255, 0.93);
+
+    border-color:
+        rgba(0, 0, 0, 0.12);
+
+}
+
+body.light-mode .notification {
+
+    background:
+        rgba(0, 0, 0, 0.05);
+
+}
+
+body.light-mode .notification-header h2 {
+
+    color: #111827;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - CONTEXT MENU
+   ========================================================= */
+
+body.light-mode #context-menu {
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    border-color:
+        rgba(0, 0, 0, 0.12);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.20);
+
+}
+
+body.light-mode #context-menu button {
+
+    color: #111827;
+
+}
+
+body.light-mode #context-menu button:hover {
+
+    background:
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE - TOAST
+   ========================================================= */
+
+body.light-mode .toast {
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    border-color:
+        rgba(0, 0, 0, 0.10);
+
+    color: #111827;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.18);
+
+}

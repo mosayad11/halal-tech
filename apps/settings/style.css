@@ -1,0 +1,208 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    background:
+        #10131a;
+
+    color:
+        white;
+
+}
+
+.settings {
+
+    padding: 35px;
+
+    max-width: 800px;
+
+    margin: auto;
+
+}
+
+h1 {
+
+    margin: 0;
+
+    font-size: 32px;
+
+}
+
+.subtitle {
+
+    opacity: .55;
+
+    margin-top: 8px;
+
+}
+
+
+.settings-section {
+
+    margin-top: 35px;
+
+}
+
+.settings-section h2 {
+
+    font-size: 17px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.setting {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 16px;
+
+    border: 1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color: white;
+
+    cursor: pointer;
+
+    text-align: left;
+
+}
+
+.setting:hover {
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+.setting-icon {
+
+    font-size: 25px;
+
+}
+
+.setting-info {
+
+    flex: 1;
+
+}
+
+.setting-info strong {
+
+    display: block;
+
+}
+
+.setting-info small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    opacity: .5;
+
+}
+
+
+.toggle {
+
+    width: 45px;
+
+    height: 24px;
+
+    border-radius: 20px;
+
+    background: #444;
+
+    position: relative;
+
+}
+
+.toggle::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 18px;
+
+    height: 18px;
+
+    top: 3px;
+
+    left: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    transition: .2s;
+
+}
+
+.toggle.active {
+
+    background: #4d8dff;
+
+}
+
+.toggle.active::after {
+
+    left: 24px;
+
+}
+
+body {
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+body {
+    background: #080b12;
+    color: white;
+}
+
+body.light-mode {
+    background: #f3f5f9;
+    color: #111827;
+}
+
+body.light-mode .settings {
+    color: #111827;
+}
+
+body.light-mode .subtitle {
+    color: #64748b;
+}
+
+body.light-mode .setting {
+    background: rgba(0, 0, 0, 0.04);
+    color: #111827;
+}
+
+body.light-mode .setting:hover {
+    background: rgba(0, 0, 0, 0.08);
+}

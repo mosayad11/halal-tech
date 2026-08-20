@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SO Halal Mode OS - A web-based operating system"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0f19"
+    >
+
+    <title>SO Halal Mode OS</title>
+
+    <!-- =========================
+         CSS
+    ========================== -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- =========================
+         App Icons / Favicon
+    ========================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/icons/me.png"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         OS ROOT
+    ====================================================== -->
+
+    <div id="os">
+
+        <!-- =================================================
+             DESKTOP
+        ================================================== -->
+
+        <main id="desktop">
+
+            <!--
+                Apps will be generated dynamically with JavaScript.
+
+                Example:
+
+                ME Browser
+                ME Store
+                ME Games
+                ME Files
+                ME Settings
+
+                We don't put them directly here.
+            -->
+
+            <div id="desktop-apps"></div>
+
+        </main>
+
+
+        <!-- =================================================
+             WINDOWS CONTAINER
+        ================================================== -->
+
+        <section
+            id="windows-container"
+            aria-label="Open applications"
+        ></section>
+
+
+        <!-- =================================================
+             START MENU
+        ================================================== -->
+
+        <section
+            id="start-menu"
+            class="hidden"
+            aria-label="Start Menu"
+        >
+
+            <!-- Search -->
+
+            <div class="start-search">
+
+                <input
+                    type="search"
+                    id="app-search"
+                    placeholder="Search apps..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- Pinned Apps -->
+
+            <div class="start-section">
+
+                <h2>Pinned</h2>
+
+                <div
+                    id="pinned-apps"
+                    class="apps-grid"
+                ></div>
+
+            </div>
+
+
+            <!-- All Apps -->
+
+            <div class="start-section">
+
+                <h2>All Apps</h2>
+
+                <div
+                    id="all-apps"
+                    class="apps-list"
+                ></div>
+
+            </div>
+
+
+            <!-- Start Menu Bottom -->
+
+            <div class="start-bottom">
+
+                <div class="system-user">
+
+                    <div class="user-avatar">
+                        ME
+                    </div>
+
+                    <span>
+                        User
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="start-settings"
+                    class="system-button"
+                    type="button"
+                    title="Settings"
+                >
+                    ⚙️
+                </button>
+
+
+                <button
+                    id="power-button"
+                    class="system-button"
+                    type="button"
+                    title="Power"
+                >
+                    ⏻
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TASKBAR
+        ================================================== -->
+
+        <footer id="taskbar">
+
+            <!-- Start Button -->
+
+            <button
+                id="start-button"
+                class="taskbar-button"
+                type="button"
+                aria-label="Start"
+                aria-expanded="false"
+            >
+
+                <span class="me-logo">
+                    ME
+                </span>
+
+            </button>
+
+
+            <!-- Search Button -->
+
+            <button
+                id="taskbar-search"
+                class="taskbar-button"
+                type="button"
+                title="Search"
+            >
+                🔍
+            </button>
+
+
+            <!-- Running Apps -->
+
+            <div
+                id="running-apps"
+                class="running-apps"
+            ></div>
+
+
+            <!-- Taskbar Right Side -->
+
+            <div
+                id="taskbar-right"
+                class="taskbar-right"
+            >
+
+                <!-- Internet -->
+
+                <button
+                    id="network-button"
+                    class="tray-button"
+                    type="button"
+                    title="Network"
+                >
+                    🌐
+                </button>
+
+
+                <!-- Volume -->
+
+                <button
+                    id="volume-button"
+                    class="tray-button"
+                    type="button"
+                    title="Volume"
+                >
+                    🔊
+                </button>
+
+
+                <!-- Battery -->
+
+                <button
+                    id="battery-button"
+                    class="tray-button"
+                    type="button"
+                    title="Battery"
+                >
+                    🔋
+                </button>
+
+
+                <!-- Date / Time -->
+
+                <button
+                    id="clock"
+                    class="clock"
+                    type="button"
+                    title="Date and Time"
+                >
+
+                    <span id="time">
+                        00:00
+                    </span>
+
+                    <span id="date">
+                        00/00/0000
+                    </span>
+
+                </button>
+
+            </div>
+
+        </footer>
+
+
+        <!-- =================================================
+             NOTIFICATION CENTER
+        ================================================== -->
+
+        <aside
+            id="notification-center"
+            class="hidden"
+            aria-label="Notifications"
+        >
+
+            <div class="notification-header">
+
+                <h2>
+                    Notifications
+                </h2>
+
+                <button
+                    id="clear-notifications"
+                    type="button"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div
+                id="notifications"
+                class="notifications"
+            ></div>
+
+        </aside>
+
+
+        <!-- =================================================
+             QUICK SETTINGS
+        ================================================== -->
+
+        <section
+            id="quick-settings"
+            class="hidden"
+            aria-label="Quick Settings"
+        >
+
+            <div class="quick-settings-grid">
+
+                <button
+                    class="quick-setting"
+                    id="wifi-toggle"
+                    type="button"
+                >
+                    <span>🌐</span>
+                    <span>Internet</span>
+                </button>
+
+
+                <button
+                    class="quick-setting"
+                    id="dark-mode-toggle"
+                    type="button"
+                >
+                    <span>🌙</span>
+                    <span>Dark Mode</span>
+                </button>
+
+
+                <button
+                    class="quick-setting"
+                    id="sound-toggle"
+                    type="button"
+                >
+                    <span>🔊</span>
+                    <span>Sound</span>
+                </button>
+
+
+                <button
+                    class="quick-setting"
+                    id="fullscreen-toggle"
+                    type="button"
+                >
+                    <span>⛶</span>
+                    <span>Fullscreen</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTEXT MENU
+        ================================================== -->
+
+        <div
+            id="context-menu"
+            class="hidden"
+        >
+
+            <button
+                type="button"
+                data-action="open"
+            >
+                Open
+            </button>
+
+            <button
+                type="button"
+                data-action="pin"
+            >
+                Pin to Start
+            </button>
+
+            <button
+                type="button"
+                data-action="desktop"
+            >
+                Add to Desktop
+            </button>
+
+            <hr>
+
+            <button
+                type="button"
+                data-action="refresh"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             GLOBAL LOADING SCREEN
+        ================================================== -->
+
+        <div
+            id="loading-screen"
+            aria-hidden="true"
+        >
+
+            <div class="loading-content">
+
+                <div class="loading-logo">
+                    ME
+                </div>
+
+                <h1>
+                    SO Halal Mode OS
+                </h1>
+
+                <div class="loading-spinner"></div>
+
+                <p>
+                    Starting...
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             GLOBAL MODAL
+        ================================================== -->
+
+        <div
+            id="modal-container"
+            class="hidden"
+        ></div>
+
+
+        <!-- =================================================
+             TOAST CONTAINER
+        ================================================== -->
+
+        <div
+            id="toast-container"
+            aria-live="polite"
+        ></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <!--
+        Main OS
+    -->
+
+
+<script src="js/apps.js"></script>
+
+<script src="js/main.js"></script>
+
+</body>
+</html>
