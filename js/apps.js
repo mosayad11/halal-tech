@@ -26,7 +26,7 @@ const APPS = [
         icon: 'assets/icons/notepad.png',
         category: 'Productivity',
         path: 'apps/notepad/index.html',
-        desktop: true,
+        desktop: false,
         pinned: true
     },
 
@@ -36,16 +36,16 @@ const APPS = [
         icon: 'assets/icons/store.png',
         category: 'System',
         path: 'apps/store/index.html',
-        desktop: true,
-        pinned: true
+        desktop: false,
+        pinned: false
     },
 
     {
-        id: 'browser',
-        name: 'Browser',
-        icon: 'assets/icons/browser.png',
+        id: 'mosayad_apps',
+        name: 'Mosayad apps',
+        icon: 'assets/icons/mosayad_apps.png',
         category: 'Internet',
-        path: 'apps/browser/index.html',
+        path: 'https://mosayad11.github.io',
         desktop: true,
         pinned: true
     },
@@ -56,7 +56,7 @@ const APPS = [
         icon: 'assets/icons/calculator.png',
         category: 'Utilities',
         path: 'apps/calculator/index.html',
-        desktop: true,
+        desktop: false,
         pinned: true
     },
 
@@ -67,7 +67,7 @@ const APPS = [
         category: 'Islamic',
         path: 'apps/quran/index.html',
         desktop: true,
-        pinned: true
+        pinned: false
     },
 
     {
@@ -77,7 +77,7 @@ const APPS = [
         category: 'Islamic',
         path: 'apps/adhkar/index.html',
         desktop: true,
-        pinned: true
+        pinned: false
     },
 
     {
@@ -87,7 +87,27 @@ const APPS = [
         category: 'Islamic',
         path: 'apps/prayer/index.html',
         desktop: true,
-        pinned: true
+        pinned: false
+    },
+
+    {
+        id: 'battut',
+        name: 'Battut',
+        icon: 'assets/icons/battut.jpg',
+        category: 'Internet',
+        path: 'https://battut.app/',
+        desktop: true,
+        pinned: false
+    },
+
+    {
+        id: 'haramblur',
+        name: 'Haram Blur',
+        icon: 'assets/icons/haramblur.jpg',
+        category: 'Internet',
+        path: 'https://haramblur.com/',
+        desktop: true,
+        pinned: false
     }
 
 ];
