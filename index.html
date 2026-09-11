@@ -20,6 +20,33 @@
 
     <title>SO Halal Mode OS</title>
 
+    <link rel="manifest" href="manifest.json">
+
+    <link
+        rel="apple-touch-icon"
+        href="assets/icon-192-dark.png"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Halal Tech"
+    >
+
     <!-- =========================
          CSS
     ========================== -->
@@ -51,7 +78,7 @@
 
     <meta
         property="og:image"
-        content="assets/logo.gif"
+        content="assets/logo.png"
     >
 
     <meta
@@ -68,15 +95,28 @@
 
     <link
         rel="icon"
-        href="assets/logo.gif"
+        href="assets/logo.png"
     >
 
+    <audio id="background-music" preload="auto"></audio>
+
+
     <audio
-        id="background-music"
-        loop
+        id="hover-sound"
+        preload="auto"
     >
         <source
-            src="sounds/background.mp3"
+            src="sounds/hover.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+    <audio
+        id="click-sound"
+        preload="auto"
+    >
+        <source
+            src="sounds/click.mp3"
             type="audio/mpeg"
         >
     </audio>
@@ -270,7 +310,7 @@
             >
 
                 <!-- Internet -->
-
+<!-- 
                 <button
                     id="network-button"
                     class="tray-button"
@@ -278,7 +318,7 @@
                     title="Network"
                 >
                     🌐
-                </button>
+                </button> -->
 
 
                 <!-- Volume -->
@@ -289,7 +329,8 @@
                     type="button"
                     title="Volume"
                 >
-                    🔊
+                    <!-- 🔊 -->
+                    ✨
                 </button>
 
 
@@ -512,6 +553,11 @@
 
     </div>
 
+
+    <button id="install-pwa-btn" class="install-pwa-btn" type="button">
+        <span>📲</span>
+        <span>Install</span>
+    </button>
 
     <!-- =====================================================
          JAVASCRIPT

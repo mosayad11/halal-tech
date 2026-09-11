@@ -39,6 +39,431 @@ const timeElement = document.getElementById("time");
 const dateElement = document.getElementById("date");
 const toastContainer = document.getElementById("toast-container");
 const contextMenu = document.getElementById("context-menu");
+const backgroundMusic = document.getElementById("background-music");
+const hoverSound = document.getElementById("hover-sound");
+const clickSound = document.getElementById("click-sound");
+
+
+let deferredInstallPrompt = null;
+
+const installPwaButton =
+    document.getElementById("install-pwa-btn");
+
+function isRunningAsPWA() {
+    return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+    );
+}
+
+window.addEventListener("beforeinstallprompt", event => {
+    // منع المتصفح من إظهار الـ prompt تلقائيًا
+    event.preventDefault();
+
+    deferredInstallPrompt = event;
+
+    // لو الموقع مفتوح كـ Website عادي
+    if (!isRunningAsPWA()) {
+        installPwaButton?.classList.add("show");
+    }
+});
+
+installPwaButton?.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) return;
+
+    deferredInstallPrompt.prompt();
+
+    const result = await deferredInstallPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+        console.log("[PWA] User installed Halal Tech.");
+    }
+
+    deferredInstallPrompt = null;
+
+    installPwaButton?.classList.remove("show");
+});
+
+window.addEventListener("appinstalled", () => {
+    console.log("[PWA] Halal Tech installed.");
+
+    deferredInstallPrompt = null;
+
+    installPwaButton?.classList.remove("show");
+});
+
+/* =========================================================
+   SOUND SYSTEM
+   ========================================================= */
+
+const SOUND_VOLUME = {
+    hover: 0.25,
+    click: 0.45,
+    music: 0.20
+};
+
+const BACKGROUND_TRACKS = [
+    "001", "018", "051", "055", "056", "067", "072", "078", "112", "113", "114"
+];
+
+const SOUND_STATE_KEY = "so_halal_mode_sound_state";
+
+let currentBackgroundTrack = 0;
+let backgroundPosition = 0;
+
+function saveSoundState() {
+    if (!backgroundMusic) return;
+
+    const state = {
+        track: currentBackgroundTrack,
+        time: backgroundMusic.currentTime || 0,
+        enabled: OS.settings.sound
+    };
+
+    localStorage.setItem(
+        SOUND_STATE_KEY,
+        JSON.stringify(state)
+    );
+}
+
+function loadSoundState() {
+    try {
+        const saved = localStorage.getItem(SOUND_STATE_KEY);
+
+        if (!saved) return;
+
+        const state = JSON.parse(saved);
+
+        if (
+            typeof state.track === "number" &&
+            state.track >= 0 &&
+            state.track < BACKGROUND_TRACKS.length
+        ) {
+            currentBackgroundTrack = state.track;
+        }
+
+        if (
+            typeof state.time === "number" &&
+            state.time >= 0
+        ) {
+            backgroundPosition = state.time;
+        }
+
+    } catch (error) {
+        console.error("Failed to load sound state:", error);
+    }
+}
+
+function playBackgroundTrack(index, resumeTime = 0) {
+    if (!backgroundMusic) return;
+
+    if (!OS.settings.sound) {
+        backgroundMusic.pause();
+        return;
+    }
+
+    if (BACKGROUND_TRACKS.length === 0) return;
+
+    currentBackgroundTrack =
+        index % BACKGROUND_TRACKS.length;
+
+    backgroundMusic.src = "../sounds/background/" +
+        BACKGROUND_TRACKS[currentBackgroundTrack] + ".mp3";
+
+    backgroundMusic.volume = SOUND_VOLUME.music;
+
+    backgroundMusic.addEventListener(
+        "loadedmetadata",
+        () => {
+            if (resumeTime > 0 && resumeTime < backgroundMusic.duration) {
+                backgroundMusic.currentTime = resumeTime;
+            }
+
+            const promise = backgroundMusic.play();
+
+            if (promise) {
+                promise.catch(() => {});
+            }
+        },
+        { once: true }
+    );
+}
+
+
+let lastSoundSave = 0;
+
+backgroundMusic.addEventListener("timeupdate", () => {
+    const now = Date.now();
+
+    if (now - lastSoundSave < 1000) {
+        return;
+    }
+
+    lastSoundSave = now;
+
+    backgroundPosition = backgroundMusic.currentTime;
+
+    saveSoundState();
+});
+
+backgroundMusic.addEventListener("ended", () => {
+    if (!OS.settings.sound) return;
+
+    currentBackgroundTrack++;
+
+    if (currentBackgroundTrack >= BACKGROUND_TRACKS.length) {
+        currentBackgroundTrack = 0;
+    }
+
+    backgroundPosition = 0;
+
+    saveSoundState();
+
+    playBackgroundTrack(currentBackgroundTrack, 0);
+});
+
+
+/* =========================================================
+   PLAY SOUND
+   ========================================================= */
+
+function playSound(
+    type
+) {
+
+    /*
+        Respect the user's sound setting.
+    */
+
+    if (!OS.settings.sound) {
+        return;
+    }
+
+
+    let audio = null;
+    let volume = 1;
+
+
+    if (type === "hover") {
+
+        audio = hoverSound;
+        volume = SOUND_VOLUME.hover;
+
+    }
+
+
+    else if (type === "click") {
+
+        audio = clickSound;
+        volume = SOUND_VOLUME.click;
+
+    }
+
+
+    if (!audio) {
+        return;
+    }
+
+
+    try {
+
+        /*
+            Reset the sound so repeated clicks
+            can play immediately.
+        */
+
+        audio.pause();
+
+        audio.currentTime = 0;
+
+        audio.volume = volume;
+
+
+        const promise =
+            audio.play();
+
+
+        if (promise) {
+
+            promise.catch(
+                () => {
+                    /*
+                        Browser may block audio
+                        until user interaction.
+                    */
+                }
+            );
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Sound playback failed:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   BACKGROUND MUSIC
+   ========================================================= */
+
+function updateBackgroundMusic() {
+    if (!backgroundMusic) return;
+
+    if (!OS.settings.sound) {
+        backgroundMusic.pause();
+        return;
+    }
+
+    backgroundMusic.volume = SOUND_VOLUME.music;
+}
+
+
+/* =========================================================
+   START BACKGROUND MUSIC
+   ========================================================= */
+
+function startBackgroundMusic() {
+    if (!backgroundMusic) return;
+    if (!OS.settings.sound) return;
+
+    if (!backgroundMusic.src) {
+        playBackgroundTrack(
+            currentBackgroundTrack,
+            backgroundPosition
+        );
+
+        return;
+    }
+
+    backgroundMusic.volume = SOUND_VOLUME.music;
+
+    const promise = backgroundMusic.play();
+
+    if (promise) {
+        promise.catch(() => {});
+    }
+}
+
+/* =========================================================
+   GLOBAL UI SOUNDS
+   ========================================================= */
+
+function setupSoundEvents() {
+
+    /*
+        Elements that should produce UI sounds.
+    */
+
+    const interactiveSelector = [
+        "button",
+        "input",
+        "select",
+        "textarea",
+        "a",
+        ".desktop-app",
+        ".app-list-item",
+        ".start-app",
+        ".running-app",
+        ".os-window"
+    ].join(",");
+
+
+    /* =====================================================
+       HOVER SOUND
+       ===================================================== */
+
+    document.addEventListener(
+        "mouseover",
+        event => {
+
+            const element =
+                event.target.closest(
+                    interactiveSelector
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            /*
+                Prevent playing the sound again
+                when moving between children
+                of the same element.
+            */
+
+            if (
+                event.relatedTarget &&
+                element.contains(
+                    event.relatedTarget
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            playSound(
+                "hover"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CLICK SOUND
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        event => {
+
+            const element =
+                event.target.closest(
+                    interactiveSelector
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            playSound(
+                "click"
+            );
+
+        },
+        true
+    );
+
+
+    /* =====================================================
+       FIRST USER INTERACTION
+       ===================================================== */
+
+    document.addEventListener(
+        "pointerdown",
+        () => {
+
+            startBackgroundMusic();
+
+        },
+        {
+            once: true
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -54,8 +479,13 @@ document.addEventListener(
 function initializeOS() {
 
     loadSettings();
+    loadSoundState();
 
     OS.apps = [...APPS];
+
+    setupSoundEvents();
+
+    updateBackgroundMusic();
 
     renderDesktop();
     renderStartMenu();
@@ -90,7 +520,6 @@ function initializeOS() {
     }
 
 }
-
 
 
 /* =========================================================
@@ -177,32 +606,29 @@ function toggleDarkMode() {
    ========================================================= */
 
 function toggleSound() {
+    OS.settings.sound = !OS.settings.sound;
 
-    OS.settings.sound =
-        !OS.settings.sound;
+    if (!OS.settings.sound) {
+        saveSoundState();
 
+        backgroundMusic.pause();
+    } else {
+        startBackgroundMusic();
+    }
 
     applySettings();
-
     saveSettings();
-
 
     notifyApps(
         "settings-changed",
-        {
-            settings: {
-                ...OS.settings
-            }
-        }
+        { settings: { ...OS.settings } }
     );
-
 
     showToast(
         OS.settings.sound
             ? "Sound enabled"
             : "Sound disabled"
     );
-
 }
 
 /* =========================================================
@@ -2291,6 +2717,29 @@ window.addEventListener(
 
 
             /* ---------------------------------------------
+            Sound handling
+            --------------------------------------------- */
+
+            if (setting === "sound") {
+
+                if (!OS.settings.sound) {
+
+                    // Save exact position before stopping
+                    saveSoundState();
+
+                    if (backgroundMusic) {
+                        backgroundMusic.pause();
+                    }
+
+                } else {
+
+                    // Resume from the saved position
+                    startBackgroundMusic();
+                }
+            }
+
+
+            /* ---------------------------------------------
                Save
                --------------------------------------------- */
 
@@ -2372,6 +2821,26 @@ window.addEventListener(
     }
 );
 
+window.addEventListener("beforeunload", () => {
+    saveSoundState();
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        saveSoundState();
+    }
+});
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+        if (OS.settings.sound) {
+            startBackgroundMusic();
+        }
+    },
+    { once: true }
+);
+
 /* =========================================================
    PUBLIC API
    ========================================================= */
@@ -2391,3 +2860,121 @@ window.SO = {
     showToast
 
 };
+
+
+/* =========================================================
+   PWA SERVICE WORKER
+   ========================================================= */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        async () => {
+
+            try {
+
+                const registration =
+                    await navigator.serviceWorker.register(
+                        "./sw.js",
+                        {
+                            scope: "./"
+                        }
+                    );
+
+
+                console.log(
+                    "[PWA] Service Worker registered:",
+                    registration.scope
+                );
+
+
+                /* =============================================
+                   CHECK FOR UPDATES
+                   ============================================= */
+
+                registration.update();
+
+
+                registration.addEventListener(
+                    "updatefound",
+                    () => {
+
+                        const newWorker =
+                            registration.installing;
+
+                        if (!newWorker) {
+                            return;
+                        }
+
+
+                        console.log(
+                            "[PWA] New version found..."
+                        );
+
+
+                        newWorker.addEventListener(
+                            "statechange",
+                            () => {
+
+                                console.log(
+                                    "[PWA] Worker state:",
+                                    newWorker.state
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "[PWA] Service Worker registration failed:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       NEW SERVICE WORKER TOOK CONTROL
+       ===================================================== */
+
+    let refreshing = false;
+
+
+    navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        () => {
+
+            /*
+             * Prevent infinite reload
+             */
+            if (refreshing) {
+                return;
+            }
+
+            refreshing = true;
+
+
+            console.log(
+                "[PWA] New version activated. Reloading..."
+            );
+
+
+            window.location.reload();
+
+        }
+    );
+
+}
+
+if (isRunningAsPWA()) {
+    installPwaButton?.classList.remove("show");
+}
