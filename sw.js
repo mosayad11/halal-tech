@@ -1,53 +1,48 @@
-const CACHE_NAME = "halal-tech-v1";
+const CACHE_NAME = "halal-tech-v3";
+
+const STATIC_FILES = [
+    "./",
+    "./index.html",
+    "./manifest.json",
+    "./css/style.css",
+    "./js/main.js",
+    "./js/apps.js"
+];
 
 
-/* =========================================================
-   INSTALL
-   ========================================================= */
+// ============================================================
+// INSTALL
+// ============================================================
 
 self.addEventListener("install", event => {
 
-    console.log(
-        "[SW] Installing new version..."
-    );
+    console.log("[SW] Installing:", CACHE_NAME);
 
     event.waitUntil(
 
         caches.open(CACHE_NAME)
             .then(cache => {
 
-                return cache.addAll([
-                    "./",
-                    "./index.html",
-                    "./manifest.json",
-                    "./css/style.css",
-                    "./js/main.js",
-                    "./js/apps.js"
-                ]);
+                return cache.addAll(
+                    STATIC_FILES
+                );
 
             })
 
     );
 
-    /*
-     * Activate the new Service Worker
-     * immediately instead of waiting for
-     * all old tabs to close.
-     */
     self.skipWaiting();
 
 });
 
 
-/* =========================================================
-   ACTIVATE
-   ========================================================= */
+// ============================================================
+// ACTIVATE
+// ============================================================
 
 self.addEventListener("activate", event => {
 
-    console.log(
-        "[SW] Activating new version..."
-    );
+    console.log("[SW] Activating:", CACHE_NAME);
 
     event.waitUntil(
 
@@ -57,23 +52,21 @@ self.addEventListener("activate", event => {
                 return Promise.all(
 
                     cacheNames
+
                         .filter(
-                            name =>
-                                name !== CACHE_NAME
+                            name => name !== CACHE_NAME
                         )
+
                         .map(
-                            name =>
-                                caches.delete(name)
+                            name => caches.delete(name)
                         )
 
                 );
 
             })
+
             .then(() => {
 
-                /*
-                 * Take control of all open pages
-                 */
                 return self.clients.claim();
 
             })
@@ -83,18 +76,43 @@ self.addEventListener("activate", event => {
 });
 
 
-/* =========================================================
-   FETCH
-   ========================================================= */
+// ============================================================
+// FETCH
+// ============================================================
 
 self.addEventListener("fetch", event => {
-    if (event.request.method !== "GET") return;
 
-    const url = new URL(event.request.url);
+    const request =
+        event.request;
 
-    // ============================================
-    // APPS FOLDER
-    // ============================================
+    // We only handle GET requests.
+    if (request.method !== "GET") {
+        return;
+    }
+
+
+    const url =
+        new URL(request.url);
+
+
+    // ========================================================
+    // IMPORTANT:
+    // Never intercept external APIs.
+    // ========================================================
+
+    if (
+        url.origin !== self.location.origin
+    ) {
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // App / Asset files
+    // Cache First
+    // ========================================================
 
     const isAppFile =
         url.pathname.includes("/halal-tech/apps/");
@@ -102,52 +120,119 @@ self.addEventListener("fetch", event => {
     const isAssetFile =
         url.pathname.includes("/halal-tech/assets/");
 
-    if (isAppFile || isAssetFile) {
+
+    if (
+        isAppFile ||
+        isAssetFile
+    ) {
 
         event.respondWith(
-            caches.match(event.request)
+
+            caches.match(request)
+
                 .then(cachedResponse => {
 
-                    // موجود في الكاش
                     if (cachedResponse) {
+
                         return cachedResponse;
+
                     }
 
-                    // غير موجود → نزله من النت واعمله cache
-                    return fetch(event.request)
+
+                    return fetch(request)
+
                         .then(response => {
 
-                            if (!response || response.status !== 200) {
+                            if (
+                                !response ||
+                                response.status !== 200
+                            ) {
+
                                 return response;
+
                             }
 
-                            const responseToCache = response.clone();
+
+                            const responseToCache =
+                                response.clone();
+
 
                             caches.open(CACHE_NAME)
                                 .then(cache => {
+
                                     cache.put(
-                                        event.request,
+                                        request,
                                         responseToCache
                                     );
+
+                                })
+                                .catch(error => {
+
+                                    console.warn(
+                                        "[SW] Cache put failed:",
+                                        error
+                                    );
+
                                 });
 
+
                             return response;
+
                         });
+
                 })
-                .catch(() => {
-                    return caches.match(event.request);
+
+                .catch(error => {
+
+                    console.warn(
+                        "[SW] App/asset fetch failed:",
+                        error
+                    );
+
+
+                    return caches.match(request)
+                        .then(cachedResponse => {
+
+                            if (cachedResponse) {
+
+                                return cachedResponse;
+
+                            }
+
+
+                            return new Response(
+                                "Offline",
+                                {
+                                    status: 503,
+                                    statusText: "Offline",
+                                    headers: {
+                                        "Content-Type":
+                                            "text/plain"
+                                    }
+                                }
+                            );
+
+                        });
+
                 })
+
         );
 
+
         return;
+
     }
 
-    // ============================================
-    // OTHER FILES
-    // ============================================
+
+    // ========================================================
+    // Normal local website files
+    // Network First
+    // ========================================================
 
     event.respondWith(
-        fetch(event.request)
+
+        fetch(request)
+
             .then(response => {
 
                 if (
@@ -155,18 +240,65 @@ self.addEventListener("fetch", event => {
                     response.status === 200 &&
                     response.type === "basic"
                 ) {
-                    const clone = response.clone();
+
+                    const responseToCache =
+                        response.clone();
+
 
                     caches.open(CACHE_NAME)
                         .then(cache => {
-                            cache.put(event.request, clone);
+
+                            cache.put(
+                                request,
+                                responseToCache
+                            );
+
+                        })
+                        .catch(error => {
+
+                            console.warn(
+                                "[SW] Cache update failed:",
+                                error
+                            );
+
                         });
+
                 }
 
+
                 return response;
+
             })
+
             .catch(() => {
-                return caches.match(event.request);
+
+                return caches.match(request)
+
+                    .then(cachedResponse => {
+
+                        if (cachedResponse) {
+
+                            return cachedResponse;
+
+                        }
+
+
+                        return new Response(
+                            "Offline",
+                            {
+                                status: 503,
+                                statusText: "Offline",
+                                headers: {
+                                    "Content-Type":
+                                        "text/plain"
+                                }
+                            }
+                        );
+
+                    });
+
             })
+
     );
+
 });

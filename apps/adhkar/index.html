@@ -2,11 +2,17 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
     >
 
     <title>الأذكار اليومية</title>
@@ -15,19 +21,30 @@
         rel="stylesheet"
         href="style.css"
     >
+
 </head>
 
 <body>
-    <button id="themeButton" class="theme-button">
-        🌙
+
+    <button
+        id="themeButton"
+        class="theme-button"
+        type="button"
+        aria-label="تغيير المظهر"
+    >
+        ☀️
     </button>
-    <!-- ========================= -->
-    <!-- Header -->
-    <!-- ========================= -->
+
 
     <header class="header">
 
-        <h1>🤲 الأذكار اليومية</h1>
+        <div class="header-icon">
+            🤲
+        </div>
+
+        <h1>
+            الأذكار اليومية
+        </h1>
 
         <p>
             اذكر الله واطمئن قلبك
@@ -35,10 +52,6 @@
 
     </header>
 
-
-    <!-- ========================= -->
-    <!-- Categories -->
-    <!-- ========================= -->
 
     <main>
 
@@ -50,48 +63,242 @@
             <button
                 class="category-card"
                 data-category="morning"
+                type="button"
             >
-                <span>🌅</span>
-                <strong>أذكار الصباح</strong>
-                <small>ابدأ يومك بذكر الله</small>
+                <span class="category-icon">🌅</span>
+
+                <strong>
+                    أذكار الصباح
+                </strong>
+
+                <small>
+                    ابدأ يومك بذكر الله
+                </small>
             </button>
 
 
             <button
                 class="category-card"
                 data-category="evening"
+                type="button"
             >
-                <span>🌇</span>
-                <strong>أذكار المساء</strong>
-                <small>اختم يومك بذكر الله</small>
-            </button>
+                <span class="category-icon">🌇</span>
 
+                <strong>
+                    أذكار المساء
+                </strong>
 
-            <button
-                class="category-card"
-                data-category="before-sleep"
-            >
-                <span>😴</span>
-                <strong>أذكار النوم</strong>
-                <small>اذكر الله قبل نومك</small>
+                <small>
+                    اختم يومك بذكر الله
+                </small>
             </button>
 
 
             <button
                 class="category-card"
                 data-category="after-prayer"
+                type="button"
             >
-                <span>🕌</span>
-                <strong>بعد الصلاة</strong>
-                <small>أذكار بعد الصلوات</small>
+                <span class="category-icon">🕌</span>
+
+                <strong>
+                    بعد الصلاة
+                </strong>
+
+                <small>
+                    أذكار بعد الصلوات
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="before-sleep"
+                type="button"
+            >
+                <span class="category-icon">🌙</span>
+
+                <strong>
+                    أذكار النوم
+                </strong>
+
+                <small>
+                    أذكار ما قبل النوم
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="waking-up"
+                type="button"
+            >
+                <span class="category-icon">🌤️</span>
+
+                <strong>
+                    أذكار الاستيقاظ
+                </strong>
+
+                <small>
+                    ابدأ صباحك بذكر الله
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="prayer"
+                type="button"
+            >
+                <span class="category-icon">🤲</span>
+
+                <strong>
+                    أذكار الصلاة
+                </strong>
+
+                <small>
+                    أدعية وأذكار متعلقة بالصلاة
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="mosque"
+                type="button"
+            >
+                <span class="category-icon">🕌</span>
+
+                <strong>
+                    أذكار المسجد
+                </strong>
+
+                <small>
+                    أذكار الذهاب إلى المسجد
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="travel"
+                type="button"
+            >
+                <span class="category-icon">✈️</span>
+
+                <strong>
+                    أذكار السفر
+                </strong>
+
+                <small>
+                    أدعية وأذكار السفر
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="food"
+                type="button"
+            >
+                <span class="category-icon">🍽️</span>
+
+                <strong>
+                    أذكار الطعام والشراب
+                </strong>
+
+                <small>
+                    قبل الطعام وبعده
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="home"
+                type="button"
+            >
+                <span class="category-icon">🏠</span>
+
+                <strong>
+                    أذكار المنزل
+                </strong>
+
+                <small>
+                    عند دخول المنزل والخروج منه
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="anxiety"
+                type="button"
+            >
+                <span class="category-icon">🌿</span>
+
+                <strong>
+                    الكرب والهم
+                </strong>
+
+                <small>
+                    أدعية عند الضيق والكرب
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="protection"
+                type="button"
+            >
+                <span class="category-icon">🛡️</span>
+
+                <strong>
+                    التحصين والحفظ
+                </strong>
+
+                <small>
+                    أذكار الحماية والتحصين
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="forgiveness"
+                type="button"
+            >
+                <span class="category-icon">💚</span>
+
+                <strong>
+                    الاستغفار
+                </strong>
+
+                <small>
+                    أذكار طلب المغفرة
+                </small>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="hajj"
+                type="button"
+            >
+                <span class="category-icon">🕋</span>
+
+                <strong>
+                    الحج والعمرة
+                </strong>
+
+                <small>
+                    أدعية وأذكار الحج والعمرة
+                </small>
             </button>
 
         </section>
 
-
-        <!-- ========================= -->
-        <!-- Adhkar Page -->
-        <!-- ========================= -->
 
         <section
             id="adhkarPage"
@@ -103,8 +310,9 @@
                 <button
                     id="backButton"
                     class="back-button"
+                    type="button"
                 >
-                    ← رجوع
+                    → رجوع
                 </button>
 
                 <h2 id="categoryTitle">
@@ -113,36 +321,6 @@
 
             </div>
 
-
-            <!-- Progress -->
-
-            <div class="progress-container">
-
-                <div class="progress-info">
-
-                    <span>
-                        التقدم
-                    </span>
-
-                    <span id="progressText">
-                        0%
-                    </span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div
-                        id="progressBar"
-                        class="progress"
-                    ></div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Adhkar -->
 
             <div
                 id="adhkarContainer"
