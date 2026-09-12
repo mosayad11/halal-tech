@@ -19,9 +19,7 @@ APPS.forEach(
 
         card.innerHTML =
 
-            '<img src="' +
-                app.icon +
-            '">' +
+            '<img src="../../' + app.icon +'">' +
 
             '<h3>' +
                 app.name +

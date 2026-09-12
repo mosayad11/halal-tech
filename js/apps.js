@@ -11,6 +11,16 @@
 const APPS = [
 
     {
+        id: 'profile',
+        name: 'My Profile',
+        icon: 'assets/icons/profile.png',
+        category: 'System',
+        path: 'apps/profile/index.html',
+        desktop: true,
+        pinned: true
+    },
+
+    {
         id: 'settings',
         name: 'Settings',
         icon: 'assets/icons/settings.png',

@@ -1,4 +1,4 @@
-const CACHE_NAME = "halal-tech-v3";
+const CACHE_NAME = "halal-tech-v4";
 
 const STATIC_FILES = [
     "./",

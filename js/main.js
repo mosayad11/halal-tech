@@ -5,6 +5,21 @@
 
 
 /* =========================================================
+   FIREBASE
+   ========================================================= */
+
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    getDocs,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+/* =========================================================
    GLOBAL STATE
    ========================================================= */
 
@@ -42,7 +57,8 @@ const contextMenu = document.getElementById("context-menu");
 const backgroundMusic = document.getElementById("background-music");
 const hoverSound = document.getElementById("hover-sound");
 const clickSound = document.getElementById("click-sound");
-
+const userNameElement = document.getElementById("user-name");
+const usersCountElement = document.getElementById("users-count");
 
 let deferredInstallPrompt = null;
 
@@ -462,6 +478,134 @@ function setupSoundEvents() {
             once: true
         }
     );
+
+}
+
+
+/* =========================================================
+   LOGIN CHECK
+   ========================================================= */
+
+function checkLogin() {
+
+    const userId =
+        localStorage.getItem("userId");
+
+    if (!userId) {
+
+        window.location.href = "login.html";
+
+        return false;
+    }
+
+    return true;
+}
+
+
+/* =========================================================
+   GET CURRENT USER
+   ========================================================= */
+
+async function loadCurrentUser() {
+
+    const userId =
+        localStorage.getItem("userId");
+
+    const savedName =
+        localStorage.getItem("userName");
+
+
+    if (savedName) {
+
+        userNameElement.textContent =
+            savedName;
+
+    }
+
+
+    if (!userId) {
+        return;
+    }
+
+
+    try {
+
+        const userRef =
+            doc(db, "users", userId);
+
+        const userSnapshot =
+            await getDoc(userRef);
+
+
+        if (userSnapshot.exists()) {
+
+            const userData =
+                userSnapshot.data();
+
+            const name =
+                userData.name || savedName || DEFAULT_USER_NAME;
+
+
+            userNameElement.textContent =
+                name;
+
+
+            localStorage.setItem(
+                "userName",
+                name
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Failed to load user:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD USERS COUNT
+   ========================================================= */
+
+async function loadUsersCount() {
+
+    if (!usersCountElement) {
+        return;
+    }
+
+
+    try {
+
+        const usersSnapshot =
+            await getDocs(
+                collection(db, "users")
+            );
+
+
+        usersCountElement.textContent =
+            usersSnapshot.size;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Failed to load users count:",
+            error
+        );
+
+        usersCountElement.textContent =
+            "—";
+
+    }
 
 }
 
@@ -2841,26 +2985,9 @@ document.addEventListener(
     { once: true }
 );
 
-/* =========================================================
-   PUBLIC API
-   ========================================================= */
 
-window.SO = {
-
-    OS,
-
-    openApp,
-
-    closeWindow,
-
-    minimizeWindow,
-
-    toggleMaximize,
-
-    showToast
-
-};
-
+loadCurrentUser();
+loadUsersCount();
 
 /* =========================================================
    PWA SERVICE WORKER
@@ -2978,3 +3105,23 @@ if ("serviceWorker" in navigator) {
 if (isRunningAsPWA()) {
     installPwaButton?.classList.remove("show");
 }
+
+/* =========================================================
+   PUBLIC API
+   ========================================================= */
+
+window.SO = {
+
+    OS,
+
+    openApp,
+
+    closeWindow,
+
+    minimizeWindow,
+
+    toggleMaximize,
+
+    showToast
+
+};
