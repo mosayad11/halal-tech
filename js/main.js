@@ -1302,7 +1302,7 @@ function createDesktopApp(app) {
 
 
     element.addEventListener(
-        "dblclick",
+        "click",
         () => {
 
             openApp(

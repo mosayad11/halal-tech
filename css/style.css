@@ -410,14 +410,14 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background:
-        rgba(255, 255, 255, 0.15);
+        rgb(171, 143, 255);
 
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background:
-        rgba(255, 255, 255, 0.25);
+        rgb(204, 196, 255);
 }
 
 
@@ -2142,4 +2142,264 @@ body.light-mode .toast {
 
 .install-pwa-btn.show {
     display: flex;
+}
+
+
+/* =========================================================
+   WELCOME
+   ========================================================= */
+
+.welcome-section {
+
+    min-height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 0;
+
+}
+
+
+.welcome-small {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--primary-light);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.welcome-content h1 {
+
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            48px
+        );
+
+    line-height: 1.05;
+
+    letter-spacing: -1.7px;
+
+}
+
+
+#user-name {
+
+    color: var(--primary-light);
+
+}
+
+
+.welcome-content p {
+
+    margin-top: 10px;
+
+    color: var(--text-secondary);
+
+    font-size:
+        clamp(
+            13px,
+            2vw,
+            15px
+        );
+
+}
+
+
+.users-card {
+
+    min-width: 135px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 13px 16px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    background:
+        var(--surface);
+
+    backdrop-filter:
+        blur(16px);
+
+}
+
+
+.users-icon {
+
+    width: 39px;
+
+    height: 39px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 11px;
+
+    background:
+        rgba(77, 124, 255, 0.13);
+
+}
+
+
+.users-card strong {
+
+    display: block;
+
+    font-size: 18px;
+
+}
+
+
+.users-card span:last-child {
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   WELCOME SECTION
+   ========================================================= */
+
+.welcome-section h1 {
+
+    margin: 0;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: clamp(20px, 9vw, 30px);
+
+    font-weight: 900;
+
+    /* letter-spacing: -4px; */
+
+    /* line-height: 1; */
+
+}
+
+
+/* =========================================================
+   ANIMATED GRADIENT TEXT
+   ========================================================= */
+
+.hi-text,
+#user-name {
+
+    background: linear-gradient(
+        90deg,
+        #ff3b30,
+        #ff9500,
+        #ffcc00,
+        #34c759,
+        #00c7ff,
+        #5856d6,
+        #af52de,
+        #ff2d55
+    );
+
+    background-size: 500% 100%;
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        welcomeGradient
+        20s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(80, 150, 255, 0.25)
+        )
+        drop-shadow(
+            0 0 25px
+            rgba(150, 80, 255, 0.15)
+        );
+
+}
+
+
+/* =========================================================
+   GRADIENT ANIMATION
+   ========================================================= */
+
+@keyframes welcomeGradient {
+
+    0% {
+
+        background-position: 0% 50%;
+
+    }
+
+    50% {
+
+        background-position: 250% 50%;
+
+    }
+
+    100% {
+
+        background-position: 500% 50%;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE WELCOME
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .welcome-section h1 {
+
+        gap: 15px;
+
+        font-size: clamp(
+            20px,
+            15vw,
+            30px
+        );
+
+        /* letter-spacing: -3px; */
+
+    }
+
 }
