@@ -1,12 +1,14 @@
-const CACHE_NAME = "halal-tech-v5";
+const CACHE_NAME = "halal-tech-v6";
 
 const STATIC_FILES = [
     "./",
     "./index.html",
+    "./login.html",
     "./manifest.json",
     "./css/style.css",
     "./js/main.js",
-    "./js/apps.js"
+    "./js/apps.js",
+    "./js/firebase.js",
 ];
 
 
