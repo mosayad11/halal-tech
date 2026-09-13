@@ -1,4 +1,4 @@
-const CACHE_NAME = "halal-tech-v8";
+const CACHE_NAME = "halal-tech-v9";
 
 const BASE_PATH = "/halal-tech/";
 
@@ -28,23 +28,13 @@ const STATIC_FILES = [
 
 self.addEventListener("install", event => {
 
-    console.log(
-        "[SW] Installing:",
-        CACHE_NAME
-    );
+    console.log("[SW] Installing:", CACHE_NAME);
 
     event.waitUntil(
-
         caches.open(CACHE_NAME)
-
             .then(cache => {
-
-                return cache.addAll(
-                    STATIC_FILES
-                );
-
+                return cache.addAll(STATIC_FILES);
             })
-
     );
 
     self.skipWaiting();
@@ -58,30 +48,18 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
 
-    console.log(
-        "[SW] Activating:",
-        CACHE_NAME
-    );
+    console.log("[SW] Activating:", CACHE_NAME);
 
     event.waitUntil(
 
         caches.keys()
-
             .then(cacheNames => {
 
                 return Promise.all(
 
                     cacheNames
-
-                        .filter(
-                            name =>
-                                name !== CACHE_NAME
-                        )
-
-                        .map(
-                            name =>
-                                caches.delete(name)
-                        )
+                        .filter(name => name !== CACHE_NAME)
+                        .map(name => caches.delete(name))
 
                 );
 
@@ -104,450 +82,342 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
 
-    const request =
-        event.request;
+    const originalRequest = event.request;
 
 
-    // ========================================================
-    // Only GET requests
-    // ========================================================
+    // --------------------------------------------------------
+    // GET only
+    // --------------------------------------------------------
+
+    if (originalRequest.method !== "GET") {
+        return;
+    }
+
+
+    const originalURL =
+        new URL(originalRequest.url);
+
+
+    // --------------------------------------------------------
+    // External requests
+    // --------------------------------------------------------
 
     if (
-        request.method !== "GET"
+        originalURL.origin !== self.location.origin
     ) {
-
         return;
-
     }
 
 
-    const url =
-        new URL(request.url);
-
-
-    // ========================================================
-    // Never intercept external requests
-    // ========================================================
-
-    if (
-        url.origin !== self.location.origin
-    ) {
-
-        return;
-
-    }
-
-
-    // ========================================================
-    // FIX GITHUB PAGES PATH
-    //
-    // Example:
-    //
-    // /assets/wallpapers/004.jpg
-    //
-    // becomes:
-    //
-    // /halal-tech/assets/wallpapers/004.jpg
-    //
-    // ========================================================
-
-    let fixedURL = null;
-
-
-    if (
-        url.pathname.startsWith("/assets/")
-    ) {
-
-        fixedURL =
-            new URL(
-                BASE_PATH +
-                url.pathname.substring(
-                    "/".length
-                ),
-                url.origin
-            );
-
-    }
-
-
-    else if (
-        url.pathname.startsWith("/apps/")
-    ) {
-
-        fixedURL =
-            new URL(
-                BASE_PATH +
-                url.pathname.substring(
-                    "/".length
-                ),
-                url.origin
-            );
-
-    }
-
-
-    // ========================================================
-    // If we fixed the URL
-    // ========================================================
-
-    if (fixedURL) {
-
-        console.log(
-            "[SW] Fixed path:",
-            url.pathname,
-            "->",
-            fixedURL.pathname
-        );
-
-
-        const fixedRequest =
-            new Request(
-                fixedURL.href,
-                {
-                    method: request.method,
-                    headers: request.headers,
-                    mode: request.mode,
-                    credentials: request.credentials,
-                    cache: request.cache,
-                    redirect: request.redirect,
-                    referrer: request.referrer,
-                    referrerPolicy:
-                        request.referrerPolicy
-                }
-            );
-
-
-        event.respondWith(
-
-            caches.match(
-                fixedRequest
-            )
-
-                .then(cachedResponse => {
-
-                    if (cachedResponse) {
-
-                        console.log(
-                            "[SW] Fixed request served from cache:",
-                            fixedURL.pathname
-                        );
-
-                        return cachedResponse;
-
-                    }
-
-
-                    return fetch(
-                        fixedRequest
-                    )
-
-                        .then(response => {
-
-                            if (
-                                !response ||
-                                response.status !== 200
-                            ) {
-
-                                return response;
-
-                            }
-
-
-                            const responseToCache =
-                                response.clone();
-
-
-                            caches.open(
-                                CACHE_NAME
-                            )
-
-                                .then(cache => {
-
-                                    cache.put(
-                                        fixedRequest,
-                                        responseToCache
-                                    );
-
-                                })
-
-                                .catch(error => {
-
-                                    console.warn(
-                                        "[SW] Cache put failed:",
-                                        error
-                                    );
-
-                                });
-
-
-                            return response;
-
-                        });
-
-                })
-
-                .catch(error => {
-
-                    console.warn(
-                        "[SW] Fixed request failed:",
-                        error
-                    );
-
-
-                    return caches.match(
-                        fixedRequest
-                    )
-
-                        .then(cachedResponse => {
-
-                            if (cachedResponse) {
-
-                                return cachedResponse;
-
-                            }
-
-
-                            return new Response(
-                                "Offline",
-                                {
-                                    status: 503,
-                                    statusText:
-                                        "Offline",
-                                    headers: {
-                                        "Content-Type":
-                                            "text/plain"
-                                    }
-                                }
-                            );
-
-                        });
-
-                })
-
-        );
-
-
-        return;
-
-    }
-
-
-    // ========================================================
-    // Detect normal App / Asset files
-    // ========================================================
-
-    const scopePath =
-        new URL(
-            self.registration.scope
-        ).pathname;
-
-
-    const isAppFile =
-        url.pathname.startsWith(
-            scopePath + "apps/"
-        );
-
-
-    const isAssetFile =
-        url.pathname.startsWith(
-            scopePath + "assets/"
-        );
-
-
-    // ========================================================
-    // App / Asset files
-    // Cache First
-    // ========================================================
-
-    if (
-        isAppFile ||
-        isAssetFile
-    ) {
-
-        event.respondWith(
-
-            caches.match(request)
-
-                .then(cachedResponse => {
-
-                    if (cachedResponse) {
-
-                        return cachedResponse;
-
-                    }
-
-
-                    return fetch(request)
-
-                        .then(response => {
-
-                            if (
-                                !response ||
-                                response.status !== 200
-                            ) {
-
-                                return response;
-
-                            }
-
-
-                            const responseToCache =
-                                response.clone();
-
-
-                            caches.open(
-                                CACHE_NAME
-                            )
-
-                                .then(cache => {
-
-                                    cache.put(
-                                        request,
-                                        responseToCache
-                                    );
-
-                                })
-
-                                .catch(error => {
-
-                                    console.warn(
-                                        "[SW] Cache put failed:",
-                                        error
-                                    );
-
-                                });
-
-
-                            return response;
-
-                        });
-
-                })
-
-                .catch(error => {
-
-                    console.warn(
-                        "[SW] App/asset fetch failed:",
-                        error
-                    );
-
-
-                    return caches.match(request)
-
-                        .then(cachedResponse => {
-
-                            if (cachedResponse) {
-
-                                return cachedResponse;
-
-                            }
-
-
-                            return new Response(
-                                "Offline",
-                                {
-                                    status: 503,
-                                    statusText:
-                                        "Offline",
-                                    headers: {
-                                        "Content-Type":
-                                            "text/plain"
-                                    }
-                                }
-                            );
-
-                        });
-
-                })
-
-        );
-
-
-        return;
-
-    }
-
-
-    // ========================================================
-    // Normal local website files
-    // Network First
-    // ========================================================
+    // --------------------------------------------------------
+    // Only handle normal requests
+    // --------------------------------------------------------
 
     event.respondWith(
 
-        fetch(request)
+        fetch(originalRequest)
 
             .then(response => {
 
+                // =================================================
+                // REQUEST WORKED
+                // Don't modify anything.
+                // =================================================
+
                 if (
                     response &&
-                    response.status === 200 &&
-                    response.type === "basic"
+                    response.ok
                 ) {
 
-                    const responseToCache =
-                        response.clone();
-
-
-                    caches.open(
-                        CACHE_NAME
-                    )
-
-                        .then(cache => {
-
-                            cache.put(
-                                request,
-                                responseToCache
-                            );
-
-                        })
-
-                        .catch(error => {
-
-                            console.warn(
-                                "[SW] Cache update failed:",
-                                error
-                            );
-
-                        });
+                    return response;
 
                 }
 
 
-                return response;
+                // =================================================
+                // REQUEST FAILED
+                //
+                // Try /halal-tech/ version
+                // =================================================
+
+                return tryHalalTechPath(
+                    originalRequest,
+                    response
+                );
 
             })
 
-            .catch(() => {
+            .catch(error => {
 
-                return caches.match(request)
-
-                    .then(cachedResponse => {
-
-                        if (cachedResponse) {
-
-                            return cachedResponse;
-
-                        }
+                console.warn(
+                    "[SW] Original request failed:",
+                    originalURL.pathname,
+                    error
+                );
 
 
-                        return new Response(
-                            "Offline",
-                            {
-                                status: 503,
-                                statusText:
-                                    "Offline",
-                                headers: {
-                                    "Content-Type":
-                                        "text/plain"
-                                }
-                            }
-                        );
+                // =================================================
+                // Network error
+                // Try /halal-tech/ version
+                // =================================================
 
-                    });
+                return tryHalalTechPath(
+                    originalRequest,
+                    null
+                );
 
             })
 
     );
 
 });
+
+
+// ============================================================
+// TRY HALAL-TECH PATH
+// ============================================================
+
+async function tryHalalTechPath(
+    originalRequest,
+    originalResponse
+) {
+
+    const originalURL =
+        new URL(originalRequest.url);
+
+
+    // --------------------------------------------------------
+    // If already inside /halal-tech/
+    // don't modify it.
+    // --------------------------------------------------------
+
+    if (
+        originalURL.pathname.startsWith(
+            BASE_PATH
+        )
+    ) {
+
+        // If we already have a real response,
+        // return it.
+
+        if (originalResponse) {
+            return originalResponse;
+        }
+
+
+        // Otherwise try cache.
+
+        const cached =
+            await caches.match(
+                originalRequest
+            );
+
+        if (cached) {
+            return cached;
+        }
+
+
+        return new Response(
+            "Offline",
+            {
+                status: 503,
+                statusText: "Offline",
+                headers: {
+                    "Content-Type":
+                        "text/plain"
+                }
+            }
+        );
+
+    }
+
+
+    // --------------------------------------------------------
+    // Build new /halal-tech/ URL
+    // --------------------------------------------------------
+
+    const fixedURL =
+        new URL(
+            BASE_PATH +
+            originalURL.pathname.replace(
+                /^\/+/,
+                ""
+            ),
+            originalURL.origin
+        );
+
+
+    fixedURL.search =
+        originalURL.search;
+
+
+    console.log(
+        "[SW] Original request failed:",
+        originalURL.pathname
+    );
+
+    console.log(
+        "[SW] Trying:",
+        fixedURL.pathname
+    );
+
+
+    // --------------------------------------------------------
+    // Create fixed request
+    // --------------------------------------------------------
+
+    const fixedRequest =
+        new Request(
+            fixedURL.href,
+            originalRequest
+        );
+
+
+    // --------------------------------------------------------
+    // Check cache first
+    // --------------------------------------------------------
+
+    const cachedResponse =
+        await caches.match(
+            fixedRequest
+        );
+
+
+    if (cachedResponse) {
+
+        console.log(
+            "[SW] Loaded from cache:",
+            fixedURL.pathname
+        );
+
+        return cachedResponse;
+
+    }
+
+
+    // --------------------------------------------------------
+    // Try actual /halal-tech/ URL
+    // --------------------------------------------------------
+
+    try {
+
+        const fixedResponse =
+            await fetch(
+                fixedRequest
+            );
+
+
+        if (
+            fixedResponse &&
+            fixedResponse.ok
+        ) {
+
+            console.log(
+                "[SW] Fixed path worked:",
+                fixedURL.pathname
+            );
+
+
+            // ------------------------------------------------
+            // Save successful response
+            // ------------------------------------------------
+
+            const responseToCache =
+                fixedResponse.clone();
+
+
+            caches.open(CACHE_NAME)
+                .then(cache => {
+
+                    return cache.put(
+                        fixedRequest,
+                        responseToCache
+                    );
+
+                })
+                .catch(error => {
+
+                    console.warn(
+                        "[SW] Cache save failed:",
+                        error
+                    );
+
+                });
+
+
+            return fixedResponse;
+
+        }
+
+
+        // ----------------------------------------------------
+        // Both paths failed
+        // ----------------------------------------------------
+
+        if (originalResponse) {
+            return originalResponse;
+        }
+
+
+        return fixedResponse;
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "[SW] Fixed path also failed:",
+            fixedURL.pathname,
+            error
+        );
+
+
+        // ----------------------------------------------------
+        // Try original cache
+        // ----------------------------------------------------
+
+        const originalCached =
+            await caches.match(
+                originalRequest
+            );
+
+
+        if (originalCached) {
+            return originalCached;
+        }
+
+
+        // ----------------------------------------------------
+        // Try fixed cache
+        // ----------------------------------------------------
+
+        const fixedCached =
+            await caches.match(
+                fixedRequest
+            );
+
+
+        if (fixedCached) {
+            return fixedCached;
+        }
+
+
+        // ----------------------------------------------------
+        // Completely offline
+        // ----------------------------------------------------
+
+        return new Response(
+            "Offline",
+            {
+                status: 503,
+                statusText: "Offline",
+                headers: {
+                    "Content-Type":
+                        "text/plain"
+                }
+            }
+        );
+
+    }
+
+}
