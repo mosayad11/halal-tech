@@ -68,31 +68,31 @@ const BUILTIN_WALLPAPERS = [
     {
         id: "wallpaper-1",
         name: "Halal Tech (Light)",
-        src: "https://mosayad11.github.io/halal-tech/assets/wallpapers/001.png"
+        src: "../../assets/wallpapers/001.png"
     },
 
     {
         id: "wallpaper-2",
         name: "Halal Tech (Dark)",
-        src: "https://mosayad11.github.io/halal-tech/assets/wallpapers/002.png"
+        src: "../../assets/wallpapers/002.png"
     },
 
     {
         id: "wallpaper-3",
         name: "Wallpaper 3 (Dark)",
-        src: "https://mosayad11.github.io/halal-tech/assets/wallpapers/003.jpg"
+        src: "../../assets/wallpapers/003.jpg"
     },
 
     {
         id: "wallpaper-4",
         name: "Wallpaper 4 (Light)",
-        src: "https://mosayad11.github.io/halal-tech/assets/wallpapers/004.jpg"
+        src: "../../assets/wallpapers/004.jpg"
     },
 
     {
         id: "wallpaper-5",
         name: "Wallpaper 5 (Dark)",
-        src: "https://mosayad11.github.io/halal-tech/assets/wallpapers/005.jpg"
+        src: "../../assets/wallpapers/005.jpg"
     }
 
 ];
