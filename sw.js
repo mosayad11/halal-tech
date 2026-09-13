@@ -9,11 +9,11 @@ const STATIC_FILES = [
     "./js/main.js",
     "./js/apps.js",
     "./js/firebase.js",
-    "/halal-tech/assets/wallpapers/001.png",
-    "/halal-tech/assets/wallpapers/002.png",
-    "/halal-tech/assets/wallpapers/003.jpg",
-    "/halal-tech/assets/wallpapers/004.jpg",
-    "/halal-tech/assets/wallpapers/005.jpg",
+    "./assets/wallpapers/001.png",
+    "./assets/wallpapers/002.png",
+    "./assets/wallpapers/003.jpg",
+    "./assets/wallpapers/004.jpg",
+    "./assets/wallpapers/005.jpg",
 ];
 
 
