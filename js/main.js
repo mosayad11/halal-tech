@@ -32,7 +32,8 @@ const OS = {
     settings: {
         darkMode: true,
         sound: true,
-        internet: true
+        internet: true,
+        wallpaper: null
     }
 };
 
@@ -665,6 +666,31 @@ function initializeOS() {
 
 }
 
+function applyWallpaper() {
+
+    const desktop = document.getElementById("desktop");
+
+    if (!desktop) {
+        return;
+    }
+
+    const wallpaper = OS.settings.wallpaper;
+
+    if (!wallpaper) {
+
+        desktop.style.backgroundImage = "";
+
+        return;
+    }
+
+    desktop.style.backgroundImage =
+        `url("${wallpaper}")`;
+
+    desktop.style.backgroundSize = "cover";
+    desktop.style.backgroundPosition = "center";
+    desktop.style.backgroundRepeat = "no-repeat";
+}
+
 
 /* =========================================================
    APPLY SETTINGS
@@ -708,6 +734,8 @@ function applySettings() {
     updateInternetUI();
 
     updateSoundUI();
+
+    applyWallpaper();
 
 }
 
@@ -2849,8 +2877,24 @@ window.addEventListener(
                Update OS setting
                --------------------------------------------- */
 
-            OS.settings[setting] =
-                Boolean(value);
+            if (setting === "wallpaper") {
+
+                if (
+                    typeof value !== "string" &&
+                    value !== null
+                ) {
+                    return;
+                }
+
+                OS.settings.wallpaper = value;
+
+                applyWallpaper();
+
+            } else {
+
+                OS.settings[setting] = Boolean(value);
+
+            }
 
 
             /* ---------------------------------------------
