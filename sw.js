@@ -1,4 +1,4 @@
-const CACHE_NAME = "halal-tech-v9";
+const CACHE_NAME = "halal-tech-v10";
 
 const BASE_PATH = "/halal-tech/";
 
