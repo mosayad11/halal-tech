@@ -1,0 +1,1102 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "Cairo", sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+    --primary: #16845a;
+    --primary-dark: #0d6846;
+    --primary-light: #e7f5ee;
+
+    --background: #f5f8f6;
+    --surface: #ffffff;
+    --surface-2: #f0f5f2;
+
+    --text: #17211c;
+    --text-secondary: #66736c;
+
+    --border: #dce6e0;
+
+    --shadow:
+        0 10px 35px rgba(0, 0, 0, 0.07);
+
+    --danger: #d64545;
+
+    --radius: 18px;
+}
+
+
+body.dark {
+
+    --background: #0f1512;
+    --surface: #18201c;
+    --surface-2: #202b25;
+
+    --text: #f0f5f2;
+    --text-secondary: #a9b6ae;
+
+    --border: #2b3931;
+
+    --primary-light: #173e2f;
+
+    --shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background: color-mix(
+        in srgb,
+        var(--surface) 92%,
+        transparent
+    );
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+    min-height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 23px;
+}
+
+.brand h1 {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.brand span {
+    display: block;
+
+    margin-top: 1px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.theme-button {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: var(--surface-2);
+    color: var(--text);
+
+    font-size: 18px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.theme-button:hover {
+    transform: rotate(15deg);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    padding: 60px 0 45px;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.hero-icon {
+    width: 76px;
+    height: 76px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 24px;
+
+    background: var(--primary-light);
+
+    font-size: 35px;
+}
+
+.hero h2 {
+    margin-bottom: 8px;
+
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 800;
+}
+
+.hero p {
+    color: var(--text-secondary);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   SELECTORS
+========================================================= */
+
+.selectors-section {
+    padding-bottom: 25px;
+}
+
+.selectors-card {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        auto;
+
+    align-items: end;
+
+    gap: 16px;
+
+    padding: 22px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.selector-group {
+    position: relative;
+}
+
+.selector-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SEARCH SELECT
+========================================================= */
+
+.search-select {
+    position: relative;
+}
+
+.search-select input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 15px 0 45px;
+
+    direction: rtl;
+    text-align: right;
+
+    color: var(--text);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-select input:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--primary) 12%,
+            transparent
+        );
+}
+
+.search-arrow {
+    position: absolute;
+
+    left: 8px;
+    top: 50%;
+
+    width: 32px;
+    height: 32px;
+
+    transform: translateY(-50%);
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    font-size: 18px;
+
+    border-radius: 8px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.search-arrow:hover {
+    background: var(--surface-2);
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+.search-results {
+    position: absolute;
+
+    top: calc(100% + 7px);
+    right: 0;
+
+    z-index: 200;
+
+    width: 100%;
+
+    max-height: 280px;
+
+    overflow-y: auto;
+
+    display: none;
+
+    padding: 6px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.13);
+}
+
+.search-results.open {
+    display: block;
+}
+
+.search-result {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    direction: rtl;
+    text-align: right;
+
+    background: transparent;
+
+    color: var(--text);
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.search-result:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.search-result-name {
+    font-weight: 700;
+}
+
+.search-result-meta {
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+.search-empty {
+    padding: 20px 10px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.selector-action {
+    display: flex;
+}
+
+.primary-button {
+    height: 48px;
+
+    padding: 0 24px;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+}
+
+.primary-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.player-section {
+    padding: 10px 0 30px;
+}
+
+.player-card {
+    padding: 28px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.player-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.player-info h3 {
+    font-size: 22px;
+}
+
+.reciter-info {
+    text-align: left;
+
+    direction: rtl;
+}
+
+.reciter-info > span:last-child {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CURRENT AYAH
+========================================================= */
+
+.current-ayah {
+    padding: 16px;
+
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    background: var(--surface-2);
+
+    border-radius: 13px;
+}
+
+.current-ayah span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.current-ayah strong {
+    font-family: "Amiri", serif;
+
+    font-size: 24px;
+
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-area {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.progress-area span {
+    min-width: 42px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    direction: ltr;
+
+    text-align: center;
+}
+
+input[type="range"] {
+    appearance: none;
+
+    width: 100%;
+    height: 5px;
+
+    border-radius: 10px;
+
+    background: var(--border);
+
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MAIN CONTROLS
+========================================================= */
+
+.main-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 22px;
+
+    margin: 24px 0;
+}
+
+.control-button {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: var(--surface-2);
+
+    color: var(--text);
+
+    font-size: 18px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.control-button:hover {
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    transform: scale(1.05);
+}
+
+.play-button {
+    width: 66px;
+    height: 66px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 24px;
+
+    box-shadow:
+        0 8px 20px
+        color-mix(
+            in srgb,
+            var(--primary) 25%,
+            transparent
+        );
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.play-button:hover {
+    background: var(--primary-dark);
+
+    transform: scale(1.06);
+}
+
+
+/* =========================================================
+   SECONDARY CONTROLS
+========================================================= */
+
+.secondary-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.option-button {
+    min-height: 40px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    background: var(--surface-2);
+
+    color: var(--text-secondary);
+
+    border: 1px solid transparent;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.option-button:hover {
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+.option-button.active {
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+.volume-control {
+    min-height: 40px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    background: var(--surface-2);
+
+    border-radius: 10px;
+}
+
+.volume-control input {
+    width: 85px;
+}
+
+
+/* =========================================================
+   QURAN SECTION
+========================================================= */
+
+.quran-section {
+    padding: 0 0 50px;
+}
+
+.quran-card {
+    padding: 28px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.quran-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.quran-header h2 {
+    font-family: "Amiri", serif;
+
+    font-size: 28px;
+}
+
+.ayah-count {
+    text-align: center;
+
+    padding: 8px 14px;
+
+    background: var(--surface-2);
+
+    border-radius: 10px;
+}
+
+.ayah-count span {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+.ayah-count strong {
+    color: var(--primary);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   AYAH LIST
+========================================================= */
+
+.ayah-list {
+    direction: rtl;
+
+    line-height: 2.4;
+
+    font-family: "Amiri", serif;
+
+    font-size: clamp(21px, 2.5vw, 27px);
+
+    text-align: right;
+}
+
+.ayah {
+    display: inline;
+
+    padding: 2px 3px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.ayah:hover {
+    background: var(--primary-light);
+}
+
+.ayah.playing {
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.ayah-number {
+    display: inline-flex;
+
+    width: 31px;
+    height: 31px;
+
+    margin: 0 5px;
+
+    align-items: center;
+    justify-content: center;
+
+    vertical-align: middle;
+
+    border: 2px solid var(--primary);
+
+    border-radius: 50%;
+
+    color: var(--primary);
+
+    font-family: "Cairo", sans-serif;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    padding: 25px 0;
+
+    border-top: 1px solid var(--border);
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.footer a {
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    z-index: 500;
+
+    max-width: calc(100% - 40px);
+
+    padding: 12px 18px;
+
+    background: #17211c;
+    color: white;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: var(--border);
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .selectors-card {
+        grid-template-columns: 1fr;
+    }
+
+    .selector-action {
+        width: 100%;
+    }
+
+    .primary-button {
+        width: 100%;
+    }
+
+    .player-info {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        width: min(100% - 20px, 1180px);
+    }
+
+    .hero {
+        padding: 40px 0 30px;
+    }
+
+    .hero h2 {
+        font-size: 31px;
+    }
+
+    .hero p {
+        font-size: 13px;
+    }
+
+    .selectors-card,
+    .player-card,
+    .quran-card {
+        padding: 18px;
+    }
+
+    .player-info {
+        flex-direction: column;
+    }
+
+    .reciter-info {
+        width: 100%;
+
+        text-align: right;
+    }
+
+    .main-controls {
+        gap: 15px;
+    }
+
+    .control-button {
+        width: 43px;
+        height: 43px;
+    }
+
+    .play-button {
+        width: 60px;
+        height: 60px;
+    }
+
+    .secondary-controls {
+        flex-direction: column;
+    }
+
+    .option-button,
+    .volume-control {
+        width: 100%;
+    }
+
+    .volume-control {
+        justify-content: center;
+    }
+
+    .volume-control input {
+        width: 130px;
+    }
+
+    .quran-header {
+        align-items: center;
+    }
+
+    .ayah-list {
+        font-size: 22px;
+
+        line-height: 2.3;
+    }
+
+    .ayah-number {
+        width: 28px;
+        height: 28px;
+    }
+
+}

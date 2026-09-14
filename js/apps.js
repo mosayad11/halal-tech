@@ -81,6 +81,16 @@ const APPS = [
     },
 
     {
+        id: 'quran-player',
+        name: 'القران الكريم (استماع)',
+        icon: 'assets/icons/quran-player.png',
+        category: 'Islamic',
+        path: 'apps/quran-player/index.html',
+        desktop: true,
+        pinned: false
+    },
+
+    {
         id: 'adhkar',
         name: 'الاذكار اليومية',
         icon: 'assets/icons/adhkar.jpg',

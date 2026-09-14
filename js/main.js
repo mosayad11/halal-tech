@@ -119,9 +119,7 @@ const SOUND_VOLUME = {
     music: 0.20
 };
 
-const BACKGROUND_TRACKS = [
-    "001", "018", "051", "055", "056", "067", "072", "078", "112", "113", "114"
-];
+const BACKGROUND_TRACKS = [];
 
 const SOUND_STATE_KEY = "so_halal_mode_sound_state";
 
