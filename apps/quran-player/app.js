@@ -147,7 +147,10 @@ const elements = {
    INIT
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
 
 async function init() {
@@ -334,13 +337,18 @@ function setupEvents() {
         "input",
         () => {
 
-            if (!Number.isFinite(elements.audio.duration)) {
+            if (
+                !Number.isFinite(
+                    elements.audio.duration
+                )
+            ) {
                 return;
             }
 
             elements.audio.currentTime =
                 (
-                    Number(elements.progress.value) / 100
+                    Number(elements.progress.value) /
+                    100
                 ) *
                 elements.audio.duration;
 
@@ -362,24 +370,34 @@ function setupEvents() {
         updateDuration
     );
 
+
     elements.audio.addEventListener(
         "play",
         () => {
-            elements.playBtn.textContent = "⏸";
+
+            elements.playBtn.textContent =
+                "⏸";
+
         }
     );
+
 
     elements.audio.addEventListener(
         "pause",
         () => {
-            elements.playBtn.textContent = "▶";
+
+            elements.playBtn.textContent =
+                "▶";
+
         }
     );
+
 
     elements.audio.addEventListener(
         "ended",
         handleEnded
     );
+
 
     elements.audio.addEventListener(
         "error",
@@ -408,10 +426,14 @@ async function loadSurahs() {
     try {
 
         const response =
-            await fetch(`${API}/surah`);
+            await fetch(
+                `${API}/surah`
+            );
 
         if (!response.ok) {
-            throw new Error("Failed to load surahs");
+            throw new Error(
+                "Failed to load surahs"
+            );
         }
 
         const json =
@@ -452,7 +474,9 @@ async function loadReciters() {
             );
 
         if (!response.ok) {
-            throw new Error("Failed to load reciters");
+            throw new Error(
+                "Failed to load reciters"
+            );
         }
 
         const json =
@@ -462,10 +486,6 @@ async function loadReciters() {
             json.data || [];
 
 
-        /*
-         * Arabic audio editions only.
-         */
-
         const arabicEditions =
             editions.filter(
                 edition =>
@@ -473,12 +493,9 @@ async function loadReciters() {
             );
 
 
-        /*
-         * Remove duplicate identifiers.
-         */
-
         const unique =
             new Map();
+
 
         arabicEditions.forEach(
             edition => {
@@ -502,34 +519,33 @@ async function loadReciters() {
 
 
         state.reciters =
-            Array.from(unique.values());
+            Array.from(
+                unique.values()
+            );
 
-
-        /*
-         * Put Alafasy first.
-         */
 
         state.reciters.sort(
             (a, b) => {
 
                 if (
-                    a.identifier === "ar.alafasy"
+                    a.identifier ===
+                    "ar.alafasy"
                 ) {
                     return -1;
                 }
 
                 if (
-                    b.identifier === "ar.alafasy"
+                    b.identifier ===
+                    "ar.alafasy"
                 ) {
                     return 1;
                 }
 
-                return (
-                    String(a.name || "")
-                        .localeCompare(
-                            String(b.name || ""),
-                            "ar"
-                        )
+                return String(
+                    a.name || ""
+                ).localeCompare(
+                    String(b.name || ""),
+                    "ar"
                 );
 
             }
@@ -601,6 +617,7 @@ function filterSurahs(search) {
         return state.surahs;
     }
 
+
     return state.surahs.filter(
         surah => {
 
@@ -615,6 +632,7 @@ function filterSurahs(search) {
                 surah.englishNameTranslation
 
             ];
+
 
             return values.some(
                 value =>
@@ -635,7 +653,9 @@ function handleSurahSearch() {
             elements.surahSearch.value
         );
 
+
     renderSurahResults(results);
+
 
     elements.surahResults.classList.add(
         "open"
@@ -655,6 +675,7 @@ function renderSurahResults(results) {
         `;
 
         return;
+
     }
 
 
@@ -690,31 +711,36 @@ function renderSurahResults(results) {
         .querySelectorAll(
             "[data-surah-number]"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const number =
-                        Number(
-                            button.dataset.surahNumber
-                        );
+                        const number =
+                            Number(
+                                button.dataset.surahNumber
+                            );
 
-                    const surah =
-                        state.surahs.find(
-                            item =>
-                                item.number === number
-                        );
 
-                    if (surah) {
-                        selectSurah(surah);
+                        const surah =
+                            state.surahs.find(
+                                item =>
+                                    item.number ===
+                                    number
+                            );
+
+
+                        if (surah) {
+                            selectSurah(surah);
+                        }
+
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
@@ -730,7 +756,8 @@ function selectSurah(surah) {
             0,
             state.surahs.findIndex(
                 item =>
-                    item.number === surah.number
+                    item.number ===
+                    surah.number
             )
         );
 
@@ -762,6 +789,7 @@ function openSurahResults() {
         )
     );
 
+
     elements.surahResults.classList.add(
         "open"
     );
@@ -781,6 +809,7 @@ function closeSurahResults() {
 function toggleSurahResults(event) {
 
     event.stopPropagation();
+
 
     if (
         elements.surahResults.classList.contains(
@@ -810,6 +839,7 @@ function filterReciters(search) {
     const query =
         normalizeSearch(search);
 
+
     if (!query) {
         return state.reciters;
     }
@@ -830,6 +860,7 @@ function filterReciters(search) {
 
             ];
 
+
             return values.some(
                 value =>
                     normalizeSearch(value)
@@ -849,7 +880,9 @@ function handleReciterSearch() {
             elements.reciterSearch.value
         );
 
+
     renderReciterResults(results);
+
 
     elements.reciterResults.classList.add(
         "open"
@@ -869,6 +902,7 @@ function renderReciterResults(results) {
         `;
 
         return;
+
     }
 
 
@@ -908,30 +942,34 @@ function renderReciterResults(results) {
         .querySelectorAll(
             "[data-reciter-id]"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const identifier =
-                        button.dataset.reciterId;
+                        const identifier =
+                            button.dataset.reciterId;
 
-                    const reciter =
-                        state.reciters.find(
-                            item =>
-                                item.identifier ===
-                                identifier
-                        );
 
-                    if (reciter) {
-                        selectReciter(reciter);
+                        const reciter =
+                            state.reciters.find(
+                                item =>
+                                    item.identifier ===
+                                    identifier
+                            );
+
+
+                        if (reciter) {
+                            selectReciter(reciter);
+                        }
+
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
@@ -967,6 +1005,7 @@ function openReciterResults() {
         )
     );
 
+
     elements.reciterResults.classList.add(
         "open"
     );
@@ -986,6 +1025,7 @@ function closeReciterResults() {
 function toggleReciterResults(event) {
 
     event.stopPropagation();
+
 
     if (
         elements.reciterResults.classList.contains(
@@ -1013,7 +1053,9 @@ function toggleReciterResults(event) {
 function handleOutsideClick(event) {
 
     if (
-        !event.target.closest(".search-select")
+        !event.target.closest(
+            ".search-select"
+        )
     ) {
 
         closeSurahResults();
@@ -1140,24 +1182,6 @@ function restoreReciterSelection() {
 
 
 /* =========================================================
-   GET SELECTED VALUES
-========================================================= */
-
-function getSelectedSurah() {
-
-    return state.selectedSurah;
-
-}
-
-
-function getSelectedReciter() {
-
-    return state.selectedReciter;
-
-}
-
-
-/* =========================================================
    LOAD SURAH
 ========================================================= */
 
@@ -1169,10 +1193,11 @@ async function loadSurah(autoPlay = false) {
 
 
     const selectedSurah =
-        getSelectedSurah();
+        state.selectedSurah;
+
 
     const selectedReciter =
-        getSelectedReciter();
+        state.selectedReciter;
 
 
     if (!selectedSurah) {
@@ -1213,13 +1238,14 @@ async function loadSurah(autoPlay = false) {
         const surahNumber =
             selectedSurah.number;
 
+
         const reciter =
             selectedReciter.identifier;
 
 
-        /*
-         * Quran text
-         */
+        /* =========================
+           QURAN TEXT
+        ========================== */
 
         const textResponse =
             await fetch(
@@ -1238,13 +1264,15 @@ async function loadSurah(autoPlay = false) {
             await textResponse.json();
 
 
-        /*
-         * Audio edition
-         */
+        /* =========================
+           AUDIO
+        ========================== */
 
         const audioResponse =
             await fetch(
-                `${API}/surah/${surahNumber}/${encodeURIComponent(reciter)}`
+                `${API}/surah/${surahNumber}/${encodeURIComponent(
+                    reciter
+                )}`
             );
 
 
@@ -1267,9 +1295,9 @@ async function loadSurah(autoPlay = false) {
             audioJson.data?.ayahs || [];
 
 
-        /*
-         * Combine text + audio
-         */
+        /* =========================
+           COMBINE
+        ========================== */
 
         state.ayahs =
             textAyahs.map(
@@ -1277,6 +1305,7 @@ async function loadSurah(autoPlay = false) {
 
                     const audioAyah =
                         audioAyahs[index];
+
 
                     return {
 
@@ -1290,7 +1319,8 @@ async function loadSurah(autoPlay = false) {
                             ayah.text,
 
                         audio:
-                            audioAyah?.audio || null
+                            audioAyah?.audio ||
+                            null
 
                     };
 
@@ -1309,9 +1339,9 @@ async function loadSurah(autoPlay = false) {
             );
 
 
-        /*
-         * Update UI
-         */
+        /* =========================
+           UPDATE UI
+        ========================== */
 
         elements.currentSurah.textContent =
             selectedSurah.name;
@@ -1344,17 +1374,13 @@ async function loadSurah(autoPlay = false) {
         }
 
 
-        showToast(
-            `تم تحميل سورة ${selectedSurah.name}`
-        );
-
-
     } catch (error) {
 
         console.error(
             "Failed to load surah:",
             error
         );
+
 
         showToast(
             "حدث خطأ أثناء تحميل السورة."
@@ -1364,8 +1390,10 @@ async function loadSurah(autoPlay = false) {
 
         state.loading = false;
 
+
         elements.openSurahBtn.disabled =
             false;
+
 
         elements.openSurahBtn.textContent =
             "فتح السورة";
@@ -1374,72 +1402,130 @@ async function loadSurah(autoPlay = false) {
 
 }
 
-
-/* =========================================================
-   RENDER AYAHS
-========================================================= */
-
-function renderAyahs() {
-
-    if (!state.ayahs.length) {
-
-        elements.ayahList.innerHTML = "";
-
-        return;
-
-    }
-
-
-    elements.ayahList.innerHTML =
-        state.ayahs.map(
-            (ayah, index) => `
-
-                <span
-                    class="ayah"
-                    data-ayah-index="${index}"
-                >
-                    ${escapeHTML(ayah.text)}
-
-                    <span class="ayah-number">
-                        ${ayah.number}
-                    </span>
-
-                </span>
-
-            `
-        ).join(" ");
-
-
-    elements.ayahList
-        .querySelectorAll(".ayah")
-        .forEach(
-            element => {
-
-                element.addEventListener(
-                    "click",
-                    () => {
-
-                        const index =
-                            Number(
-                                element.dataset.ayahIndex
-                            );
-
-                        /*
-                         * Clicking an ayah immediately
-                         * starts playing that ayah.
-                         */
-
-                        setCurrentAyah(
-                            index,
-                            true
-                        );
-
-                    }
-                );
-
-            }
-        );
-
+/* ========================================================= 
+   RENDER AYAHS 
+========================================================= */ 
+ 
+function renderAyahs() { 
+ 
+    if (!state.ayahs.length) { 
+ 
+        elements.ayahList.innerHTML = ""; 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    const surahNumber = 
+        state.selectedSurah?.number; 
+ 
+ 
+    /* 
+     * Bismillah is displayed at the beginning 
+     * of every surah except At-Tawbah (9). 
+     * 
+     * It is displayed separately because it is 
+     * not part of the ayah audio sequence. 
+     */ 
+ 
+    const bismillah = 
+        surahNumber !== 9 
+            ? ` 
+                <div class="bismillah"> 
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ 
+                </div> 
+            ` 
+            : ""; 
+ 
+ 
+    elements.ayahList.innerHTML = 
+        bismillah + 
+        state.ayahs.map( 
+            (ayah, index) => { 
+ 
+                let ayahText = ayah.text; 
+ 
+ 
+                /* 
+                 * Remove Bismillah from the beginning 
+                 * of the first ayah of every surah 
+                 * except Al-Fatihah (1) and At-Tawbah (9). 
+                 * 
+                 * The Quran API may use different Unicode 
+                 * forms such as ٱ instead of ا, so the 
+                 * replacement is intentionally flexible. 
+                 */ 
+ 
+                if ( 
+                    index === 0 && 
+                    surahNumber !== 1 && 
+                    surahNumber !== 9 
+                ) { 
+ 
+                    ayahText = 
+                        ayahText.replace( 
+                            /^بِسْمِ\s+[ٱا]للَّهِ\s+[ٱا]لرَّحْمَٰنِ\s+[ٱا]لرَّحِيمِ\s*/u, 
+                            "" 
+                        ); 
+ 
+                } 
+ 
+ 
+                return ` 
+ 
+                    <span 
+                        class="ayah" 
+                        data-ayah-index="${index}" 
+                    > 
+ 
+                        ${escapeHTML( 
+                            ayahText 
+                        )} 
+ 
+                        <span class="ayah-number"> 
+                            ${ayah.number} 
+                        </span> 
+ 
+                    </span> 
+ 
+                `; 
+ 
+            } 
+        ).join(" "); 
+ 
+ 
+    elements.ayahList 
+        .querySelectorAll(".ayah") 
+        .forEach( 
+            element => { 
+ 
+                element.addEventListener( 
+                    "click", 
+                    () => { 
+ 
+                        const index = 
+                            Number( 
+                                element.dataset.ayahIndex 
+                            ); 
+ 
+ 
+                        /* 
+                         * Clicking an ayah 
+                         * immediately plays it. 
+                         */ 
+ 
+                        setCurrentAyah( 
+                            index, 
+                            true 
+                        ); 
+ 
+                    } 
+                ); 
+ 
+            } 
+        ); 
+ 
 }
 
 
@@ -1490,6 +1576,14 @@ function setCurrentAyah(
         );
 
 
+    /*
+     * Automatically scroll to the
+     * ayah currently being played.
+     */
+
+    scrollToCurrentAyah();
+
+
     if (autoPlay) {
         playCurrentAyah();
     }
@@ -1498,8 +1592,34 @@ function setCurrentAyah(
 
 
 /* =========================================================
-   PLAY CURRENT AYAH
+   AUTO SCROLL
 ========================================================= */
+
+function scrollToCurrentAyah() {
+
+    const currentAyah =
+        elements.ayahList.querySelector(
+            `.ayah[data-ayah-index="${state.currentAyahIndex}"]`
+        );
+
+
+    if (!currentAyah) {
+        return;
+    }
+
+
+    /*
+     * Keep the ayah around the center
+     * of the visible screen.
+     */
+
+    currentAyah.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest"
+    });
+
+}
 
 function playCurrentAyah() {
 
@@ -1520,11 +1640,101 @@ function playCurrentAyah() {
     }
 
 
-    elements.audio.src =
+    const isFirstAyah =
+        state.currentAyahIndex === 0;
+
+    const surahNumber =
+        state.selectedSurah?.number;
+
+
+    let audioUrl =
         ayah.audio;
 
 
-    elements.audio.currentTime = 0;
+    /*
+     * Bismillah audio
+     * يتم استخدام نسخة -2 من نفس الشيخ
+     * قبل أول آية من السورة.
+     *
+     * سورة التوبة (9) لا تحتوي على بسم الله.
+     */
+
+    if (
+        isFirstAyah &&
+        surahNumber !== 9
+    ) {
+
+        audioUrl =
+            ayah.audio.replace(
+                /\/quran\/audio\/(\d+)\/([^/]+)\//,
+                (match, bitrate, edition) =>
+                    `/quran/audio/${bitrate}/${edition}-2/`
+            );
+
+    }
+
+
+    const shouldTryBismillah =
+        isFirstAyah &&
+        surahNumber !== 9 &&
+        audioUrl !== ayah.audio;
+
+
+    /*
+     * لو صوت البسم الله غير متوفر
+     * نرجع تلقائياً للصوت الأصلي للآية.
+     */
+
+    if (shouldTryBismillah) {
+
+        const fallback = () => {
+
+            elements.audio.removeEventListener(
+                "error",
+                fallback
+            );
+
+
+            elements.audio.src =
+                ayah.audio;
+
+
+            elements.audio.currentTime =
+                0;
+
+
+            elements.audio.play()
+                .catch(
+                    error => {
+
+                        console.error(
+                            "Play error:",
+                            error
+                        );
+
+                    }
+                );
+
+        };
+
+
+        elements.audio.addEventListener(
+            "error",
+            fallback,
+            {
+                once: true
+            }
+        );
+
+    }
+
+
+    elements.audio.src =
+        audioUrl;
+
+
+    elements.audio.currentTime =
+        0;
 
 
     elements.audio.play()
@@ -1540,7 +1750,6 @@ function playCurrentAyah() {
         );
 
 }
-
 
 /* =========================================================
    PLAY / PAUSE
@@ -1560,11 +1769,6 @@ function togglePlay() {
 
 
     if (elements.audio.paused) {
-
-        /*
-         * If there is no audio source,
-         * load current ayah first.
-         */
 
         if (!elements.audio.src) {
 
@@ -1656,17 +1860,20 @@ function handleEnded() {
 
 
     /*
-     * Stop when auto-next is disabled.
+     * Stop at the end.
      */
 
     elements.playBtn.textContent =
         "▶";
 
+
     elements.audio.removeAttribute(
         "src"
     );
 
+
     elements.audio.load();
+
 
     showToast(
         "انتهت السورة."
@@ -1709,6 +1916,7 @@ async function previousSurah() {
 
     selectSurah(surah);
 
+
     await loadSurah(true);
 
 }
@@ -1737,6 +1945,7 @@ async function nextSurah() {
         elements.playBtn.textContent =
             "▶";
 
+
         showToast(
             "أنت عند آخر سورة."
         );
@@ -1753,6 +1962,7 @@ async function nextSurah() {
 
 
     selectSurah(surah);
+
 
     await loadSurah(true);
 
@@ -1867,12 +2077,16 @@ function updateMuteButton() {
             "active"
         );
 
+
         elements.muteBtn.firstChild.textContent =
             "🔇";
 
+
         if (span) {
+
             span.textContent =
                 "إلغاء الكتم";
+
         }
 
     } else {
@@ -1881,12 +2095,16 @@ function updateMuteButton() {
             "active"
         );
 
+
         elements.muteBtn.firstChild.textContent =
             "🔊";
 
+
         if (span) {
+
             span.textContent =
                 "كتم الصوت";
+
         }
 
     }
@@ -1965,16 +2183,26 @@ function formatTime(seconds) {
 
 
     const minutes =
-        Math.floor(seconds / 60);
+        Math.floor(
+            seconds / 60
+        );
 
 
     const remainingSeconds =
-        Math.floor(seconds % 60);
+        Math.floor(
+            seconds % 60
+        );
 
 
-    return `${String(minutes).padStart(2, "0")}:${String(
+    return `${String(minutes).padStart(
+        2,
+        "0"
+    )}:${String(
         remainingSeconds
-    ).padStart(2, "0")}`;
+    ).padStart(
+        2,
+        "0"
+    )}`;
 
 }
 
@@ -1997,6 +2225,7 @@ function loadTheme() {
             "dark"
         );
 
+
         elements.themeBtn.textContent =
             "☀️";
 
@@ -2005,6 +2234,7 @@ function loadTheme() {
         document.body.classList.remove(
             "dark"
         );
+
 
         elements.themeBtn.textContent =
             "🌙";
@@ -2056,7 +2286,9 @@ function showToast(message) {
     );
 
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
 
     toastTimer =
@@ -2100,22 +2332,27 @@ function handleAudioError(event) {
 function escapeHTML(value) {
 
     return String(value ?? "")
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
